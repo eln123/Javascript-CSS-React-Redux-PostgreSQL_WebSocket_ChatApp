@@ -4,6 +4,7 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import ClientSideSocket from "./components/Socket";
+import ContactList from "./components/ContactList";
 import { me } from "./store";
 import history from "./history";
 import { clientSideFunc } from "./socket";
@@ -26,6 +27,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/message" component={ClientSideSocket} />
+            <Route path="/contacts" component={ContactList} />
             <Redirect to="/home" />
           </Switch>
         ) : (

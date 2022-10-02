@@ -2,7 +2,7 @@
 
 const {
   db,
-  models: { User },
+  models: { User, Message, Contact },
 } = require("../server/db");
 
 /**
@@ -15,9 +15,58 @@ async function seed() {
 
   // Creating Users
   const users = await Promise.all([
-    User.create({ username: "ethan", password: "123" }),
-    User.create({ username: "helen", password: "123" }),
+    User.create({
+      username: "ethan",
+      password: "123",
+      phoneNumber: 987654321,
+      contacts: [123456789],
+    }),
+    User.create({
+      username: "helen",
+      password: "123",
+      phoneNumber: 123456789,
+      contacts: [987654321],
+    }),
   ]);
+
+  // Creating Messages
+  const messages = await Promise.all([
+    Message.create({
+      sender: 987654321,
+      receiver: 123456789,
+      content: "hi",
+    }),
+    Message.create({
+      sender: 123456789,
+      receiver: 987654321,
+      content: "hi",
+    }),
+  ]);
+
+  // Creating Contacts
+  const contacts = await Promise.all([
+    Contact.create({
+      contactHolder: 987654321,
+      contactName: "helen",
+      phoneNumber: 123456789,
+    }),
+    Contact.create({
+      contactHolder: 123456789,
+      contactName: "ethan",
+      phoneNumber: 987654321,
+    }),
+  ]);
+
+  const ethan = users[0];
+  const helen = users[1];
+  const message1 = messages[0];
+  const message2 = messages[1];
+  await helen.addMessage(message1);
+  await ethan.addMessage(message1);
+  await helen.addMessage(message2);
+  await ethan.addMessage(message2);
+  const ethanContactList = contacts[0];
+  const helenContactList = contacts[1];
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);

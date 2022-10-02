@@ -11,7 +11,8 @@ export const Home = (props) => {
   return (
     <div>
       <h3>Welcome, {username}</h3>
-      <Link to="/message">Link to Socket page</Link>
+      <Link to="/contacts">Link to Contact List page</Link>
+      <Link to="/message">Link to Message page</Link>
     </div>
   );
 };

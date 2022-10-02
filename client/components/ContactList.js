@@ -6,25 +6,25 @@ import { clientSideFunc } from "../socket";
 /**
  * COMPONENT
  */
-export class ClientSideSocket extends React.Component {
+export class ContactList extends React.Component {
   constructor() {
     super();
     this.state = {};
   }
   render() {
-    const { username } = this.props.username;
+    const { username, contacts } = this.props;
 
     return (
       <div>
-        <h2>{username}</h2>
+        <ul>
+          {contacts.map((contact, index) => (
+            <li key={index}> {contact.id} </li>
+          ))}
+        </ul>
       </div>
     );
   }
 }
-
-/**
- * CONTAINER
- */
 const mapState = (state) => {
   return {
     username: state.auth.username,
@@ -33,4 +33,4 @@ const mapState = (state) => {
   };
 };
 
-export default connect(mapState)(ClientSideSocket);
+export default connect(mapState)(ContactList);
