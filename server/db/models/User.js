@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
+const Message = require("./Message");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
@@ -15,8 +16,13 @@ const User = db.define("user", {
   password: {
     type: Sequelize.STRING,
   },
-  contacts: {
-    type: Sequelize.ARRAY(Sequelize.TEXT),
+  phoneNumber: {
+    type: Sequelize.DECIMAL,
+
+    validate: {
+      len: [9, 10],
+      isNumeric: true,
+    },
   },
 });
 
@@ -47,10 +53,17 @@ User.authenticate = async function ({ username, password }) {
   return user.generateToken();
 };
 
-User.findByToken = async function (token) {
+User.findByToken = async function (token, model) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
-    const user = User.findByPk(id);
+    const [user] = await User.findAll({
+      where: {
+        id: id,
+      },
+      include: {
+        model: Message,
+      },
+    });
     if (!user) {
       throw "nooo";
     }
