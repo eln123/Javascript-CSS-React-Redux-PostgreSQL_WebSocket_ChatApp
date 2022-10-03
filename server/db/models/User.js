@@ -1,6 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 const Message = require("./Message");
+const Contact = require("./Contact");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const axios = require("axios");
@@ -62,6 +63,7 @@ User.findByToken = async function (token, model) {
       },
       include: {
         model: Message,
+        model: Contact,
       },
     });
     if (!user) {

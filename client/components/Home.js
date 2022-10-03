@@ -9,7 +9,7 @@ export const Home = (props) => {
   const { username } = props;
 
   return (
-    <div>
+    <div id="homeContainer">
       <h3>Welcome, {username}</h3>
       <Link to="/contacts">Link to Contact List page</Link>
       <Link to="/message">Link to Message page</Link>
