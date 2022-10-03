@@ -67,6 +67,8 @@ async function seed() {
   await ethan.addMessage(message2);
   const ethanContactList = contacts[0];
   const helenContactList = contacts[1];
+  await ethan.addContact(ethanContactList);
+  await helen.addContact(helenContactList);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);

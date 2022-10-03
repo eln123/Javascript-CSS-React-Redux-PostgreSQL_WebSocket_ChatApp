@@ -16,11 +16,16 @@ export class ContactList extends React.Component {
 
     return (
       <div>
-        <ul>
-          {contacts.map((contact, index) => (
-            <li key={index}> {contact.id} </li>
-          ))}
-        </ul>
+        {contacts ? (
+          <ul>
+            {" "}
+            {contacts.map((contact, index) => (
+              <li id="contact" key={index}>
+                {contact.contactName}{" "}
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     );
   }
