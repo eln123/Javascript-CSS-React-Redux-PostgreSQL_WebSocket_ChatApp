@@ -8,6 +8,7 @@ import ContactList from "./components/ContactList";
 import { me } from "./store";
 import history from "./history";
 import { clientSideFunc } from "./socket";
+import Conversation from "./components/Conversation";
 
 /**
  * COMPONENT
@@ -28,6 +29,7 @@ class Routes extends Component {
             <Route path="/home" component={Home} />
             <Route path="/message" component={ClientSideSocket} />
             <Route path="/contacts" component={ContactList} />
+            <Route path="/:roomNumber" component={Conversation} />
             <Redirect to="/home" />
           </Switch>
         ) : (

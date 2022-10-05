@@ -19,6 +19,9 @@ const Message = db.define("message", {
   content: {
     type: Sequelize.TEXT,
   },
+  roomNumber: {
+    type: Sequelize.STRING,
+  },
 });
 
 module.exports = Message;

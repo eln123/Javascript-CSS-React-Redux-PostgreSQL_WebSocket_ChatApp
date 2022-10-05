@@ -1,5 +1,6 @@
 body {
   font-family: sans-serif;
+  background-color: gray
 }
 
 a {
@@ -38,4 +39,24 @@ form div {
   list-style-type: none;
   border: 2px solid black;
   padding: 1em 1.5em
+}
+
+#messageList {
+  width: 60em;
+  height: 60em;
+  margin-left: 20%;
+}
+
+#sentMessage {
+  list-style-type: none;
+  border: 2px solid black;
+  padding: 1em 1.5em;
+  background-color: turquoise
+}
+
+#receivedMessage {
+  list-style-type: none;
+  border: 2px solid black;
+  padding: 1em 1.5em;
+  background-color: lightgray
 }

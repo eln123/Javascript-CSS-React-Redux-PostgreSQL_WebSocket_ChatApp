@@ -61,10 +61,12 @@ User.findByToken = async function (token, model) {
       where: {
         id: id,
       },
-      include: {
-        model: Message,
-        model: Contact,
-      },
+      include: [
+        {
+          model: Message,
+        },
+        { model: Contact },
+      ],
     });
     if (!user) {
       throw "nooo";
@@ -76,6 +78,20 @@ User.findByToken = async function (token, model) {
     throw error;
   }
 };
+
+// User.findMessages = async function (roomNumber) {
+//   try {
+//     const messages = await Message.findAll({
+//       where: {
+//         roomNumber: req.body.roomNumber,
+//       },
+//     });
+//     return messages;
+//   } catch (ex) {
+//     const error = Error("User.js line 89 is where this is being logged from");
+//     throw error;
+//   }
+// };
 
 /**
  * hooks

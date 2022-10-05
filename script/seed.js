@@ -29,17 +29,24 @@ async function seed() {
     }),
   ]);
 
+  const roomNumber = `${Math.min(
+    users[0].phoneNumber,
+    users[1].phoneNumber
+  )}${Math.max(users[0].phoneNumber, users[1].phoneNumber)}`;
+
   // Creating Messages
   const messages = await Promise.all([
     Message.create({
       sender: 987654321,
       receiver: 123456789,
       content: "hi",
+      roomNumber: roomNumber,
     }),
     Message.create({
       sender: 123456789,
       receiver: 987654321,
       content: "hi",
+      roomNumber: roomNumber,
     }),
   ]);
 
@@ -59,16 +66,15 @@ async function seed() {
 
   const ethan = users[0];
   const helen = users[1];
-  const message1 = messages[0];
-  const message2 = messages[1];
-  await helen.addMessage(message1);
-  await ethan.addMessage(message1);
-  await helen.addMessage(message2);
-  await ethan.addMessage(message2);
+
   const ethanContactList = contacts[0];
   const helenContactList = contacts[1];
   await ethan.addContact(ethanContactList);
   await helen.addContact(helenContactList);
+  await ethan.addMessage(messages[0]);
+  await ethan.addMessage(messages[1]);
+  await helen.addMessage(messages[0]);
+  await helen.addMessage(messages[1]);
 
   console.log(`seeded ${users.length} users`);
   console.log(`seeded successfully`);
