@@ -20,7 +20,7 @@ class Routes extends Component {
   render() {
     const { isLoggedIn, auth } = this.props;
     if (isLoggedIn) {
-      clientSideFunc(auth);
+      // clientSideFunc(auth);
     }
     return (
       <div>

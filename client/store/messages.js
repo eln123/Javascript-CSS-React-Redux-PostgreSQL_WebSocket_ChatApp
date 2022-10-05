@@ -21,13 +21,11 @@ const setUser = (user) => ({ type: SET_USER, user });
  * THUNK CREATORS
  */
 
-export const getMessages = (user, contact) => async (dispatch) => {
+export const getMessages = (user, selectedRoom) => async (dispatch) => {
   try {
-    const roomName = `${Math.min(
-      user.phoneNumber,
-      contact.phoneNumber
-    )}${Math.max(user.phoneNumber, contact.phoneNumber)}`;
-    const res = await axios.get(`/api/users/${user.phoneNumber}/${roomName}`);
+    const res = await axios.get(
+      `/api/users/${user.phoneNumber}/${selectedRoom}`
+    );
     const user = res.data;
     const messages = res.data.messages;
 

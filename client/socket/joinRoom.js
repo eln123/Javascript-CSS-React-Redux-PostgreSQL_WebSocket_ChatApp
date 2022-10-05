@@ -12,13 +12,17 @@ const socketHTML = `<div>
       </form>
     </div>`;
 
-export const clientSideJoinRoom = (user, contact, getContact) => {
-  const clientSocket = socket(auth);
-  if (getContact) {
-    let container = document.getElementById("potentialSocket");
+export const clientSideJoinRoom = (user, room, isTrue) => {
+  const clientSocket = socket(user);
+  if (!true) {
+    return;
+  }
+  if (isTrue) {
+    let container = document.getElementById("messageSocket");
     container.innerHTML = socketHTML;
+    clientSocket.emit("join-room", room);
   } else {
-    let container = document.getElementById("potentialSocket");
+    let container = document.getElementById("messageSocket");
     container.innerHTML = "";
     return;
   }
@@ -26,10 +30,7 @@ export const clientSideJoinRoom = (user, contact, getContact) => {
   //
 
   const messageInput = document.getElementById("message-input");
-  const room = `${Math.min(user.phoneNumber, contact.phoneNumber)}${Math.max(
-    user.id,
-    contact.id
-  )}`;
+
   const form = document.getElementById("form");
   const onMessagePage = messageInput && room && form ? true : false;
 
@@ -42,6 +43,13 @@ export const clientSideJoinRoom = (user, contact, getContact) => {
       displayMessage(message);
       clientSocket.emit("send-message", message, room);
       messageInput.value = "";
+    });
+
+    const joinRoomButton = document.getElementById("startConvo");
+
+    joinRoomButton.addEventListener("click", () => {
+      console.log(room);
+      clientSocket.emit("join-room", room, displayMessage);
     });
 
     function displayMessage(message) {
@@ -57,8 +65,6 @@ export const clientSideJoinRoom = (user, contact, getContact) => {
       div.textContent = `The id for this client is: ${clientSocket.id} and the username is ${client.username}`;
 
       const timeHeader = document.getElementById("time");
-
-      clientSocket.emit("join-room", room);
 
       clientSocket.on("time-change", (time) => {
         timeHeader.innerText = time;

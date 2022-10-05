@@ -3,6 +3,9 @@ const PORT = process.env.PORT || 8080;
 const app = require("./app");
 const seed = require("../script/seed");
 const socket = require("socket.io");
+const {
+  models: { User, Message },
+} = require("./db");
 
 const init = async () => {
   try {
@@ -31,18 +34,22 @@ serverSocket.on("connection", (socket) => {
     socket.emit("time-change", time);
   }, 1000);
 
-  socket.on("send-message", (message, room) => {
+  socket.on("send-message", (message, room, sender, receiver) => {
     if (room === "") {
-      console.log("hi");
       socket.broadcast.emit("receive-message", message);
     } else {
+      Message.create({
+        sender: sender,
+        receiver: receiver,
+        content: message,
+        roomNumber: room,
+      });
       socket.to(room).emit("receive-message", message);
     }
   });
 
   socket.on("join-room", (room, cb) => {
-    console.log(room);
     socket.join(room);
-    // cb(`Joined ${room}`);
+    cb(`Joined ${room}`);
   });
 });
