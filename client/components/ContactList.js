@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { clientSideFunc } from "../socket";
 import { clientSideJoinRoom } from "../socket/joinRoom";
 import { getMessages } from "../store/messages";
+import history from "../history";
 
 /**
  * COMPONENT
@@ -20,34 +21,31 @@ export class ContactList extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedContact: {},
+      selectedRoom: "",
       change: false,
     };
     this.selectContact = this.selectContact.bind(this);
   }
-  selectContact(contact, e) {
+  componentDidMount() {
+    const user = this.props.user;
+    clientSideFunc(user);
+  }
+
+  async selectContact(contact, e) {
     e.preventDefault();
-    this.state.selectedContact = contact;
+    const user = this.props.user;
+    const room = `${Math.min(user.phoneNumber, contact.phoneNumber)}${Math.max(
+      user.phoneNumber,
+      contact.phoneNumber
+    )}`;
+    this.state.selectedRoom = room;
     this.setState({ ...this.state, change: !this.state.change });
-    if (this.state.selectedContact) {
-      this.props.getMessages(this.props.user, this.state.selectedContact);
-      // clientSideJoinRoom(this.props.user, this.state.selectedContact);
-    }
+    history.location.state = `${user.phoneNumber}${contact.phoneNumber}`;
   }
   render() {
     const user = this.props.user;
     const contacts = user.contacts;
-    let messages = user.messages;
-    if (messages) {
-      const roomNumber = `${Math.min(
-        user.phoneNumber,
-        this.state.selectedContact.phoneNumber
-      )}${Math.max(user.phoneNUmber, this.state.selectedContact.phoneNumber)}`;
-      messages = messages.filter((message) => {
-        message.roomNumber === roomNumber;
-        return message;
-      });
-    }
+    const messages = this.props.user.messages;
 
     return (
       <div>
@@ -57,26 +55,30 @@ export class ContactList extends React.Component {
               {" "}
               {contacts.map((contact, index) => (
                 <button
+                  id="pleaseWork"
                   key={contact.id}
                   onClick={(e) => this.selectContact(contact, e)}
                 >
-                  {contact.contactName} {contact.id}
+                  {contact.contactName}
                 </button>
               ))}
             </ul>
           ) : null}
           {messages ? (
-            <ul id="messageList">
-              {" "}
-              {messages.map((message, index) => (
-                <li id={`${setIdOfMessage(message, user)}`} key={index}>
-                  {message.content}
-                </li>
-              ))}
-            </ul>
+            <div>
+              <ul id="messageList">
+                {" "}
+                {messages.map((message, index) => (
+                  <li id={`${setIdOfMessage(message, user)}`} key={index}>
+                    {message.content}
+                  </li>
+                ))}
+              </ul>
+            </div>
           ) : null}
         </div>
         <p>____________</p>
+        <div id="startConvo"></div>
       </div>
     );
   }
