@@ -43,6 +43,6 @@ serverSocket.on("connection", (socket) => {
   socket.on("join-room", (room, cb) => {
     console.log(room);
     socket.join(room);
-    cb(`Joined ${room}`);
+    // cb(`Joined ${room}`);
   });
 });
