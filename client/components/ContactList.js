@@ -5,6 +5,7 @@ import { clientSideFunc } from "../socket";
 import { getMessages, me } from "../store/auth";
 import history from "../history";
 import axios from "axios";
+const html = require("html-template-tag");
 
 /**
  * COMPONENT
@@ -29,7 +30,7 @@ export class ContactList extends React.Component {
   }
   componentDidMount() {
     const user = this.props.user;
-    clientSideFunc(user);
+    // clientSideFunc(user);
     this.props.loadInitialData();
   }
   async selectContact(contact, e) {
@@ -40,7 +41,12 @@ export class ContactList extends React.Component {
       contact.phoneNumber
     )}`;
     history.location.state = `${user.phoneNumber}${contact.phoneNumber}`;
+    if (room === this.state.room) return;
     this.setState({ ...this.state, room });
+    const list = document.getElementById("messageList");
+    const sentList = [...document.getElementsByClassName("sentTemporary")];
+    const receivedList = document.getElementsByClassName("receivedTemporary");
+    if (sentList) sentList.forEach((li) => li.remove());
     this.props.loadInitialData();
   }
   render() {
@@ -49,11 +55,12 @@ export class ContactList extends React.Component {
       : this.props.user;
     const contacts = user.contacts;
     const messages = this.props.user.messages;
+
     return (
       <div>
         <div>
           {contacts ? (
-            <ul>
+            <ul id="contactContainer">
               {" "}
               {contacts.map((contact, index) => (
                 <button

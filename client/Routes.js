@@ -15,12 +15,13 @@ import Conversation from "./components/Conversation";
  */
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData();
+    if (history.location.pathname !== "/conversation")
+      this.props.loadInitialData();
   }
   render() {
     const { isLoggedIn, auth } = this.props;
     if (isLoggedIn) {
-      // clientSideFunc(auth);
+      clientSideFunc(auth);
     }
     return (
       <div>
@@ -28,7 +29,7 @@ class Routes extends Component {
           <Switch>
             <Route path="/home" component={Home} />
             <Route path="/message" component={ClientSideSocket} />
-            <Route path="/contacts" component={ContactList} />
+            <Route path="/conversation" component={ContactList} />
             <Route path="/:roomNumber" component={Conversation} />
             <Redirect to="/home" />
           </Switch>

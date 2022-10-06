@@ -35,6 +35,12 @@ form div {
   color:  #255b95
 }
 
+#contactContainer {
+  display: grid;
+  width: 15vw;
+  grid-template-columns: 1fr;
+}
+
 #contact {
   list-style-type: none;
   border: 2px solid black;
@@ -54,7 +60,21 @@ form div {
   background-color: turquoise
 }
 
+.sentTemporary {
+  list-style-type: none;
+  border: 2px solid black;
+  padding: 1em 1.5em;
+  background-color: turquoise
+}
+
 #receivedMessage {
+  list-style-type: none;
+  border: 2px solid black;
+  padding: 1em 1.5em;
+  background-color: lightgray
+}
+
+.receivedTemporary {
   list-style-type: none;
   border: 2px solid black;
   padding: 1em 1.5em;
