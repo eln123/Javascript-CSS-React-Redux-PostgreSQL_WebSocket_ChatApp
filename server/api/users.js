@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User, Message },
+  models: { User, Message, Contact },
 } = require("../db");
 
 router.get("/", async (req, res, next) => {
@@ -17,23 +17,34 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:userPhoneNumber/:roomName", async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
-    const [userWithMessages] = await User.findAll({
+    console.log("hi");
+    const [user] = await User.findAll({
       where: {
-        phoneNumber: req.params.userPhoneNumber,
+        id: req.params.id,
       },
-      include: {
-        model: Message,
-        where: {
-          roomNumber: req.params.roomName,
-        },
-      },
+      include: [{ model: Message }, { model: Contact }],
     });
 
-    res.send(userWithMessages);
+    res.json(user);
   } catch (err) {
     next(err);
   }
 });
+
+router.get("/:id/:room", async (req, res, next) => {
+  try {
+    const [user] = await User.findAll({
+      where: {
+        id: req.params.id,
+      },
+      include: [{ model: Message }, { model: Contact }],
+    });
+    res.json(user);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;

@@ -4,7 +4,7 @@ const app = require("./app");
 const seed = require("../script/seed");
 const socket = require("socket.io");
 const {
-  models: { User, Message },
+  models: { User, Message, Contact },
 } = require("./db");
 
 const init = async () => {
@@ -25,7 +25,9 @@ init();
 const server = app.listen(PORT, () =>
   console.log(`Mixing it up on port ${PORT}`)
 );
+
 const serverSocket = socket(server);
+
 serverSocket.on("connection", (socket) => {
   console.log(`Connection from client ${socket.id}`);
 
@@ -34,17 +36,35 @@ serverSocket.on("connection", (socket) => {
     socket.emit("time-change", time);
   }, 1000);
 
-  socket.on("send-message", (message, room, sender, receiver) => {
+  socket.on("send-message", async (message, room, sender, receiver) => {
     if (room === "") {
       socket.broadcast.emit("receive-message", message);
     } else {
-      Message.create({
+      const messageCreated = await Message.create({
         sender: sender,
         receiver: receiver,
         content: message,
         roomNumber: room,
       });
-      socket.to(room).emit("receive-message", message);
+      const person1 = await User.findByPk(1);
+      const person2 = await User.findByPk(2);
+
+      await person1.addMessage(messageCreated);
+      await person2.addMessage(messageCreated);
+
+      // const [sendBack] = await User.findAll({
+      //   where: {
+      //     phoneNumber: sender,
+      //   },
+      //   include: [
+      //     {
+      //       model: Message,
+      //     },
+      //     { model: Contact },
+      //   ],
+      // });
+
+      socket.to(room).emit("receive-message", message, sender, receiver);
     }
   });
 

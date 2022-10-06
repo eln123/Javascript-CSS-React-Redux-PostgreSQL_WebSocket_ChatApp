@@ -2,15 +2,15 @@ import { render } from "enzyme";
 import React from "react";
 import { connect } from "react-redux";
 import { clientSideFunc } from "../socket";
-import { clientSideJoinRoom } from "../socket/joinRoom";
-import { getMessages } from "../store/messages";
+import { getMessages, me } from "../store/auth";
 import history from "../history";
+import axios from "axios";
 
 /**
  * COMPONENT
  */
 
-const setIdOfMessage = (message, user) => {
+export const setIdOfMessage = (message, user) => {
   if (message.sender === user.phoneNumber) {
     return "sentMessage";
   } else {
@@ -21,16 +21,17 @@ export class ContactList extends React.Component {
   constructor() {
     super();
     this.state = {
-      selectedRoom: "",
       change: false,
+      reload: false,
+      room: "",
     };
     this.selectContact = this.selectContact.bind(this);
   }
   componentDidMount() {
     const user = this.props.user;
     clientSideFunc(user);
+    this.props.loadInitialData();
   }
-
   async selectContact(contact, e) {
     e.preventDefault();
     const user = this.props.user;
@@ -38,15 +39,16 @@ export class ContactList extends React.Component {
       user.phoneNumber,
       contact.phoneNumber
     )}`;
-    this.state.selectedRoom = room;
-    this.setState({ ...this.state, change: !this.state.change });
     history.location.state = `${user.phoneNumber}${contact.phoneNumber}`;
+    this.setState({ ...this.state, room });
+    this.props.loadInitialData();
   }
   render() {
-    const user = this.props.user;
+    const user = this.props.updatedUser
+      ? this.props.updatedUser
+      : this.props.user;
     const contacts = user.contacts;
     const messages = this.props.user.messages;
-
     return (
       <div>
         <div>
@@ -64,15 +66,17 @@ export class ContactList extends React.Component {
               ))}
             </ul>
           ) : null}
-          {messages ? (
+          {messages && this.state.room ? (
             <div>
               <ul id="messageList">
                 {" "}
-                {messages.map((message, index) => (
-                  <li id={`${setIdOfMessage(message, user)}`} key={index}>
-                    {message.content}
-                  </li>
-                ))}
+                {messages
+                  .filter((message) => message.roomNumber === this.state.room)
+                  .map((message, index) => (
+                    <li id={`${setIdOfMessage(message, user)}`} key={index}>
+                      {message.content}
+                    </li>
+                  ))}
               </ul>
             </div>
           ) : null}
@@ -92,7 +96,11 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getMessages: (user, contact) => dispatch(getMessages(user, contact)),
+    getMessages: (user, room) => dispatch(getMessages(user, room)),
+
+    loadInitialData() {
+      dispatch(me());
+    },
   };
 };
 
