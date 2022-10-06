@@ -19,13 +19,16 @@ async function seed() {
       username: "ethan",
       password: "123",
       phoneNumber: 987654321,
-      contacts: [123456789],
     }),
     User.create({
       username: "helen",
       password: "123",
       phoneNumber: 123456789,
-      contacts: [987654321],
+    }),
+    User.create({
+      username: "tupac",
+      password: "123",
+      phoneNumber: 987123456,
     }),
   ]);
 
@@ -62,15 +65,26 @@ async function seed() {
       contactName: "ethan",
       phoneNumber: 987654321,
     }),
+    Contact.create({
+      contactHolder: 123456789,
+      contactName: "tupac",
+      phoneNumber: 987123456,
+    }),
   ]);
 
   const ethan = users[0];
   const helen = users[1];
+  const tupac = users[2];
 
   const ethanContactList = contacts[0];
   const helenContactList = contacts[1];
+  const tupacContactList = contacts[2];
   await ethan.addContact(ethanContactList);
   await helen.addContact(helenContactList);
+  await ethan.addContact(tupacContactList);
+  await helen.addContact(tupacContactList);
+  await tupac.addContact(ethanContactList);
+  await tupac.addContact(helenContactList);
   await ethan.addMessage(messages[0]);
   await ethan.addMessage(messages[1]);
   await helen.addMessage(messages[0]);

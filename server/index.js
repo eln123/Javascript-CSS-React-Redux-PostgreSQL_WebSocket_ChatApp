@@ -46,8 +46,17 @@ serverSocket.on("connection", (socket) => {
         content: message,
         roomNumber: room,
       });
-      const person1 = await User.findByPk(1);
-      const person2 = await User.findByPk(2);
+      const [person1] = await User.findAll({
+        where: {
+          phoneNumber: sender,
+        },
+      });
+      const [person2] = await User.findAll({
+        where: {
+          phoneNumber: receiver,
+        },
+      });
+      console.log("person1", person1, "person2", person2);
 
       await person1.addMessage(messageCreated);
       await person2.addMessage(messageCreated);

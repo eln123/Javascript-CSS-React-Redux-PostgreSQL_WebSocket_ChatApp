@@ -4,7 +4,7 @@ const db = require("../db");
 const Contact = db.define("contact", {
   contactHolder: {
     type: Sequelize.STRING,
-    unique: true,
+
     allowNull: false,
   },
 

@@ -11,8 +11,7 @@ export const Home = (props) => {
   return (
     <div id="homeContainer">
       <h3>Welcome, {username}</h3>
-      <Link to="/contacts">Link to Contact List page</Link>
-      <Link to="/message">Link to Message page</Link>
+      <Link to="/conversation">Link to Contact List page</Link>
     </div>
   );
 };

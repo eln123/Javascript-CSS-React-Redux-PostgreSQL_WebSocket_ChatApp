@@ -18,9 +18,8 @@ const socketHTML = `<div>
     </div>`;
 
 export const clientSideFunc = (auth) => {
-  console.log(history);
   const clientSocket = socket(auth);
-  if (history.location.pathname === "/contacts") {
+  if (history.location.pathname === "/conversation") {
     let container = document.getElementById("potentialSocket");
     container.innerHTML = socketHTML;
   } else {
@@ -95,9 +94,10 @@ export const clientSideFunc = (auth) => {
       const midIdx = history.location.state.length / 2;
       const me = history.location.state.slice(0, midIdx);
 
-      const id = "sentMessage";
-      newMessage.id = id;
+      const className = "sentTemporary";
+      newMessage.className = className;
       newMessage.textContent = message;
+
       messages.append(newMessage);
     }
 
@@ -107,9 +107,9 @@ export const clientSideFunc = (auth) => {
 
       const midIdx = history.location.state.length / 2;
       const me = history.location.state.slice(0, midIdx);
-      const id = "receivedMessage";
+      const className = "receivedTemporary";
       if (receiver === me) {
-        newMessage.id = id;
+        newMessage.class = className;
         newMessage.textContent = message;
         messages.append(newMessage);
       }
