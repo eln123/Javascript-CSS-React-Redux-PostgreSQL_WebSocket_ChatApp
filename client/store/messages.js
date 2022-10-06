@@ -7,29 +7,24 @@ const TOKEN = "token";
  * ACTION TYPES
  */
 
-const SET_MESSAGES = "SET_MESSAGES";
-const SET_USER = "SET_USER";
+const SET_UPDATED = "SET_UPDATED";
 
 /**
  * ACTION CREATORS
  */
 
-const setMessages = (messages) => ({ type: SET_MESSAGES, messages });
-const setUser = (user) => ({ type: SET_USER, user });
+const setUpdatedUser = (updatedUser) => ({ type: SET_UPDATED, updatedUser });
 
 /**
  * THUNK CREATORS
  */
 
-export const getMessages = (user, selectedRoom) => async (dispatch) => {
+export const getMessages = (userId, room) => async (dispatch) => {
   try {
-    const res = await axios.get(
-      `/api/users/${user.phoneNumber}/${selectedRoom}`
-    );
-    const user = res.data;
-    const messages = res.data.messages;
-
-    dispatch(setUser(user));
+    const res = await axios.get(`/api/users/${userId}/${room}`);
+    console.log(res);
+    const updatedUser = res.data;
+    dispatch(setUpdatedUser(updatedUser));
   } catch (err) {
     return err;
   }
@@ -40,10 +35,8 @@ export const getMessages = (user, selectedRoom) => async (dispatch) => {
  */
 export default function (state = {}, action) {
   switch (action.type) {
-    case SET_USER:
-      return action.user;
-    case SET_MESSAGES:
-      return action.messages;
+    case SET_UPDATED:
+      return action.updatedUser;
     default:
       return state;
   }

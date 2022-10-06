@@ -1,6 +1,8 @@
 import socket from "socket.io-client";
 const html = require("html-template-tag");
 import history from "../history";
+import { getUserAgain } from "../store/auth";
+import { setIdOfMessage } from "../components/ContactList";
 
 const socketHTML = `<div>
       
@@ -39,7 +41,6 @@ export const clientSideFunc = (auth) => {
       e.preventDefault();
       const message = messageInput.value;
       if (message === "") return;
-      displayMessage(message);
       if (history.location.state) {
         const midIdx = history.location.state.length / 2;
         const sender = history.location.state.slice(0, midIdx);
@@ -48,8 +49,9 @@ export const clientSideFunc = (auth) => {
           sender,
           receiver
         )}`;
-        console.log(sender);
+
         clientSocket.emit("send-message", message, room, sender, receiver);
+        displaySentMessage(message, sender, receiver);
         messageInput.value = "";
       }
     });
@@ -74,15 +76,56 @@ export const clientSideFunc = (auth) => {
       document.getElementById("message-container").append(div);
     }
 
+    // function displayNewMessage(message, sender, receiver) {
+    //   const messages = document.getElementById("messageList");
+    //   const newMessage = document.createElement("li");
+    //   newMessage.textContent = message;
+    //   const midIdx = history.location.state.length / 2;
+    //   const me = history.location.state.slice(0, midIdx);
+    //   console.log("me", me, "sender ->", sender);
+    //   const id = sender === me ? "sentMessage" : "receivedMessage";
+    //   newMessage.id = id;
+    //   messages.append(message, newMessage);
+    // }
+
+    function displaySentMessage(message, sender, receiver) {
+      const messages = document.getElementById("messageList");
+      const newMessage = document.createElement("li");
+
+      const midIdx = history.location.state.length / 2;
+      const me = history.location.state.slice(0, midIdx);
+
+      const id = "sentMessage";
+      newMessage.id = id;
+      newMessage.textContent = message;
+      messages.append(newMessage);
+    }
+
+    function displayReceivedMessage(message, sender, receiver) {
+      const messages = document.getElementById("messageList");
+      const newMessage = document.createElement("li");
+
+      const midIdx = history.location.state.length / 2;
+      const me = history.location.state.slice(0, midIdx);
+      const id = "receivedMessage";
+      if (receiver === me) {
+        newMessage.id = id;
+        newMessage.textContent = message;
+        messages.append(newMessage);
+      }
+    }
+
     /////////////
     clientSocket.on("connect", () => {
       console.log("Connected to server");
       const div = document.getElementById("id");
       div.textContent = `The id for this client is: ${clientSocket.id} and the username is ${auth.username}`;
 
-      clientSocket.on("receive-message", (message, room) => {
+      clientSocket.on("receive-message", (message, sender, receiver) => {
         console.log("received");
-        displayMessage(message);
+
+        displayReceivedMessage(message, sender, receiver);
+
         // this callback function can also
         // be used to show when the message is sent
       });
