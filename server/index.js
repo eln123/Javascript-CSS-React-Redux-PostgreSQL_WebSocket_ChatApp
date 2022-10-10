@@ -46,20 +46,25 @@ serverSocket.on("connection", (socket) => {
         content: message,
         roomNumber: room,
       });
-      const [person1] = await User.findAll({
+      const [user] = await User.findAll({
         where: {
           phoneNumber: sender,
         },
+        include: {
+          model: Message,
+        },
       });
-      const [person2] = await User.findAll({
+      const [contact] = await User.findAll({
         where: {
           phoneNumber: receiver,
         },
+        include: {
+          model: Message,
+        },
       });
-      console.log("person1", person1, "person2", person2);
 
-      await person1.addMessage(messageCreated);
-      await person2.addMessage(messageCreated);
+      await user.addMessage(messageCreated);
+      await contact.addMessage(messageCreated);
 
       // const [sendBack] = await User.findAll({
       //   where: {
@@ -73,7 +78,7 @@ serverSocket.on("connection", (socket) => {
       //   ],
       // });
 
-      socket.to(room).emit("receive-message", message, sender, receiver);
+      socket.to(room).emit("receive-message", messageCreated, user, contact);
     }
   });
 

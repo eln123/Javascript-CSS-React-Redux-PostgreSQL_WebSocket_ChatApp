@@ -1,6 +1,6 @@
 body {
   font-family: sans-serif;
-  background-color: gray
+  background-color: rgb(100, 50, 71)
 }
 
 a {
@@ -43,7 +43,7 @@ form div {
 
 #contact {
   list-style-type: none;
-  border: 2px solid black;
+  border: 2px solid white;
   padding: 1em 1.5em
 }
 
@@ -55,28 +55,32 @@ form div {
 
 #sentMessage {
   list-style-type: none;
-  border: 2px solid black;
+  
   padding: 1em 1.5em;
-  background-color: turquoise
+  background-color: turquoise;
+  color: white
 }
 
 .sentTemporary {
   list-style-type: none;
-  border: 2px solid black;
+
   padding: 1em 1.5em;
-  background-color: turquoise
+  background-color: turquoise;
+  color: white
 }
 
 #receivedMessage {
   list-style-type: none;
-  border: 2px solid black;
+
   padding: 1em 1.5em;
-  background-color: lightgray
+  background-color: lightgray;
+  color: white
 }
 
 .receivedTemporary {
   list-style-type: none;
-  border: 2px solid black;
+ 
   padding: 1em 1.5em;
-  background-color: lightgray
+  background-color: lightgray;
+  color: white
 }

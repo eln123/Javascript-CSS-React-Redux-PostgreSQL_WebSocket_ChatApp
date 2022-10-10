@@ -17,8 +17,59 @@ const socketHTML = `<div>
       </form>
     </div>`;
 
+export const setId = (message, user) => {
+  if (message.sender === user.phoneNumber) {
+    return "sentMessage";
+  } else {
+    return "receivedMessage";
+  }
+};
+
+export function displaySentMessage(message, sender, receiver) {
+  const messages = document.getElementById("messageList");
+  const newMessage = document.createElement("li");
+
+  const className = "sentTemporary";
+  newMessage.className = className;
+  newMessage.textContent = message;
+
+  messages.append(newMessage);
+}
+
+export const helper = (user, contact) => {
+  const list = [...document.getElementById("messageList")];
+  let messages = user.messages;
+  list.forEach((li) => li.remove());
+  const appendThis = messages.filter((message) => {
+    message.roomNumber === contact.room;
+    return message;
+  });
+  console.log("hi");
+  console.log(appendThis);
+  // .map((message, index) => (
+  //   <li id={`${setIdOfMessage(message, user)}`} key={index}>
+  //     {message.content}
+  //   </li>
+  // ));
+  //
+  // appendThis.forEach((li) => {
+  //   console.log(li);
+  //   let message = document.createElement("li");
+  //   message.textContent = li;
+  //   message.id = setId(message, user);
+  //   list.append(message);
+  // });
+};
+
+export const displayMessage = (message) => {
+  const div = document.createElement("div");
+  div.textContent = message;
+  document.getElementById("message-container").append(div);
+};
+
 export const clientSideFunc = (auth) => {
-  const clientSocket = socket(auth);
+  let clientSocket = socket(auth);
+
   if (history.location.pathname === "/conversation") {
     let container = document.getElementById("potentialSocket");
     container.innerHTML = socketHTML;
@@ -29,106 +80,106 @@ export const clientSideFunc = (auth) => {
   }
 
   //
-  const joinRoomButton = document.getElementById("pleaseWork");
+  const joinRoomButtons = [...document.getElementsByClassName("joinButton")];
   const messageInput = document.getElementById("message-input");
 
   const form = document.getElementById("form");
-  const onMessagePage = joinRoomButton && messageInput && form ? true : false;
+  const onMessagePage = joinRoomButtons && messageInput && form ? true : false;
 
-  if (onMessagePage) {
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const message = messageInput.value;
-      if (message === "") return;
-      if (history.location.state) {
-        const midIdx = history.location.state.length / 2;
-        const sender = history.location.state.slice(0, midIdx);
-        const receiver = history.location.state.slice(midIdx);
-        const room = `${Math.min(sender, receiver)}${Math.max(
-          sender,
-          receiver
-        )}`;
+  // if (onMessagePage) {
+  //   form.addEventListener("submit", (e) => {
+  //     e.preventDefault();
+  //     const message = messageInput.value;
+  //     if (message === "") return;
+  //     if (history.location.state) {
+  //       const midIdx = history.location.state.length / 2;
+  //       const user = history.location.state.slice(0, midIdx);
+  //       const contact = history.location.state.slice(midIdx);
+  //       const room = `${Math.min(user, contact)}${Math.max(user, contact)}`;
 
-        clientSocket.emit("send-message", message, room, sender, receiver);
-        displaySentMessage(message, sender, receiver);
-        messageInput.value = "";
-      }
-    });
+  // clientSocket.emit("send-message", message, room, user, contact);
+  // displaySentMessage(message, sender, receiver);
+  //   messageInput.value = "";
+  // }
+  // });
 
-    joinRoomButton.addEventListener("click", () => {
-      if (history.location.state) {
-        const midIdx = history.location.state.length / 2;
-        const sender = history.location.state.slice(0, midIdx);
-        const receiver = history.location.state.slice(midIdx);
-        const room = `${Math.min(sender, receiver)}${Math.max(
-          sender,
-          receiver
-        )}`;
+  // joinRoomButtons.forEach((button) =>
+  //   button.addEventListener("click", (evt) => {
+  //     if (history.location.state) {
+  //       const midIdx = history.location.state.length / 2;
+  //       const sender = history.location.state.slice(0, midIdx);
+  //       const receiver = history.location.state.slice(midIdx);
+  //       const room = `${Math.min(sender, receiver)}${Math.max(
+  //         sender,
+  //         receiver
+  //       )}`;
 
-        clientSocket.emit("join-room", room, displayMessage);
-      }
-    });
+  //       clientSocket.emit("join-room", room, displayMessage);
+  //     }
+  //   })
+  // );
 
-    function displayMessage(message) {
-      const div = document.createElement("div");
-      div.textContent = message;
-      document.getElementById("message-container").append(div);
-    }
-
-    // function displayNewMessage(message, sender, receiver) {
-    //   const messages = document.getElementById("messageList");
-    //   const newMessage = document.createElement("li");
-    //   newMessage.textContent = message;
-    //   const midIdx = history.location.state.length / 2;
-    //   const me = history.location.state.slice(0, midIdx);
-    //   console.log("me", me, "sender ->", sender);
-    //   const id = sender === me ? "sentMessage" : "receivedMessage";
-    //   newMessage.id = id;
-    //   messages.append(message, newMessage);
-    // }
-
-    function displaySentMessage(message, sender, receiver) {
-      const messages = document.getElementById("messageList");
-      const newMessage = document.createElement("li");
-
-      const midIdx = history.location.state.length / 2;
-      const me = history.location.state.slice(0, midIdx);
-
-      const className = "sentTemporary";
-      newMessage.className = className;
-      newMessage.textContent = message;
-
-      messages.append(newMessage);
-    }
-
-    function displayReceivedMessage(message, sender, receiver) {
-      const messages = document.getElementById("messageList");
-      const newMessage = document.createElement("li");
-
-      const midIdx = history.location.state.length / 2;
-      const me = history.location.state.slice(0, midIdx);
-      const className = "receivedTemporary";
-      if (receiver === me) {
-        newMessage.class = className;
-        newMessage.textContent = message;
-        messages.append(newMessage);
-      }
-    }
-
-    /////////////
-    clientSocket.on("connect", () => {
-      console.log("Connected to server");
-      const div = document.getElementById("id");
-      div.textContent = `The id for this client is: ${clientSocket.id} and the username is ${auth.username}`;
-
-      clientSocket.on("receive-message", (message, sender, receiver) => {
-        console.log("received");
-
-        displayReceivedMessage(message, sender, receiver);
-
-        // this callback function can also
-        // be used to show when the message is sent
-      });
-    });
+  function displayMessage(message) {
+    const div = document.createElement("div");
+    div.textContent = message;
+    document.getElementById("message-container").append(div);
   }
+
+  // function displaySentMessage(message, sender, receiver) {
+  //   const messages = document.getElementById("messageList");
+  //   const newMessage = document.createElement("li");
+
+  //   const className = "sentTemporary";
+  //   newMessage.className = className;
+  //   newMessage.textContent = message;
+
+  //   messages.append(newMessage);
+  // }
+
+  function displayReceivedMessage(message, user, contact) {
+    const messages = document.getElementById("messageList");
+    const newMessage = document.createElement("li");
+    const sender = message.sender;
+    const receiver = message.receiver;
+    const content = message.content;
+    const userPhoneNumber = history.location.state;
+    // console.log(
+    //   "userPhoneNumber",
+    //   userPhoneNumber,
+    //   "receiver",
+    //   receiver,
+    //   "sender",
+    //   sender
+    // );
+    const receivedClass = "receivedTemporary";
+    const sentClass = "sentTemporary";
+    // if (receiver === userPhoneNumber) {
+    newMessage.className = receivedClass;
+    newMessage.textContent = content;
+    messages.append(newMessage);
+    // } else {
+    //   newMessage.className = sentClass;
+    //   newMessage.textContent = content;
+    //   messages.append(newMessage);
+    // }
+  }
+
+  /////////////
+  clientSocket.on("connect", () => {
+    // clientSocket.removeAllListeners();
+
+    console.log("Connected to server");
+
+    clientSocket.on("receive-message", (message, user, contact) => {
+      console.log("received", user);
+
+      // helper(user, contact);
+      displayReceivedMessage(message, user, contact);
+
+      // this callback function can also
+      // be used to show when the message is sent
+    });
+  });
+
+  return clientSocket;
 };
