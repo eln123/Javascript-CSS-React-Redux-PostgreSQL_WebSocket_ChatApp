@@ -1,6 +1,6 @@
 body {
   font-family: sans-serif;
-  background-color: rgb(100, 50, 71)
+  background-color: white
 }
 
 a {
@@ -57,8 +57,9 @@ form div {
   list-style-type: none;
   
   padding: 1em 1.5em;
-  background-color: turquoise;
-  color: white
+  background-color: rgb(51, 138, 224);
+  color: white;
+  margin: 5px
 }
 
 .sentTemporary {
@@ -66,7 +67,8 @@ form div {
 
   padding: 1em 1.5em;
   background-color: turquoise;
-  color: white
+  color: white;
+  margin: 5px
 }
 
 #receivedMessage {
@@ -74,7 +76,8 @@ form div {
 
   padding: 1em 1.5em;
   background-color: lightgray;
-  color: white
+  color: white;
+  margin: 5px
 }
 
 .receivedTemporary {
@@ -82,5 +85,6 @@ form div {
  
   padding: 1em 1.5em;
   background-color: lightgray;
-  color: white
+  color: black;
+  margin: 5px
 }
