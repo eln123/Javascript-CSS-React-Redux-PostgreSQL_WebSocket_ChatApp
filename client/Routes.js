@@ -15,23 +15,26 @@ import Conversation from "./components/Conversation";
  */
 class Routes extends Component {
   componentDidMount() {
-    if (history.location.pathname !== "/conversation")
-      this.props.loadInitialData();
+    this.props.loadInitialData();
+
+    // let localStorage = window.localStorage;
+
+    // let connected = localStorage.getItem("connected");
+
+    // localStorage.setItem("connected", true);
+    // clientSideFunc(auth);
   }
   render() {
     const { isLoggedIn, auth } = this.props;
-    if (isLoggedIn) {
-      clientSideFunc(auth);
-    }
+
     return (
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/home" component={Home} />
             <Route path="/message" component={ClientSideSocket} />
             <Route path="/conversation" component={ContactList} />
-            <Route path="/:roomNumber" component={Conversation} />
-            <Redirect to="/home" />
+
+            <Redirect to="/conversation" />
           </Switch>
         ) : (
           <Switch>
