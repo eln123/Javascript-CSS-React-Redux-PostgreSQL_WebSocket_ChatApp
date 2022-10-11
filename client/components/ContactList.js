@@ -2,7 +2,6 @@ import { render } from "enzyme";
 import React from "react";
 import { connect } from "react-redux";
 import { clientSideFunc, displayMessage, displaySentMessage } from "../socket";
-import { helper } from "../socket/helper";
 
 import { getMessages, me } from "../store/auth";
 import history from "../history";
@@ -72,7 +71,8 @@ export class ContactList extends React.Component {
     evt.preventDefault();
     const room = this.state.contact.room;
     const contactPhoneNumber = this.state.contact.phoneNumber;
-    evt.target.value = "";
+    let textInput = document.getElementById("textInput");
+    textInput.value = "";
     const message = this.state.message;
 
     const user = this.props.user;
@@ -98,11 +98,12 @@ export class ContactList extends React.Component {
     if (temporaryReceived.length) {
       temporaryReceived.forEach((received) => received.remove());
     }
+
     this.setState({ ...this.state, contact: contact });
     this.state.contact = contact;
 
     this.props.loadInitialData();
-    this.state.socket.emit("join-room", contact.room, displayMessage);
+    this.state.socket.emit("join-room", contact.room);
   }
 
   render() {
@@ -120,24 +121,26 @@ export class ContactList extends React.Component {
 
     return (
       <div>
-        <div>
+        <div id="message-container"></div>
+        <div id="contactListComponentContainer">
           {contacts ? (
             <ul id="contactContainer">
-              {" "}
+              <h3 id="contactListHeader">Select contact</h3>{" "}
               {contacts.map((contact, index) => (
                 <button
+                  id="contactButton"
                   type="submit"
                   className="joinButton"
                   key={contact.id}
                   onClick={(e) => this.selectContact(contact, e)}
                 >
-                  {contact.contactName} Room {contact.room}
+                  {contact.contactName}
                 </button>
               ))}
             </ul>
           ) : null}
           {this.state.contact ? (
-            <div>
+            <div id="messageAndTextFormDiv">
               <ul id="messageList">
                 {" "}
                 {messages
@@ -151,12 +154,17 @@ export class ContactList extends React.Component {
                   ))}
               </ul>
 
-              <form onSubmit={this.handleSubmit} name={name}>
+              <form id="textForm" onSubmit={this.handleSubmit} name={name}>
                 <div>
-                  <label htmlFor="text">
-                    <small>text</small>
-                  </label>
-                  <input name="text" type="text" onChange={this.handleChange} />
+                  <label htmlFor="text">{/* <small>text</small> */}</label>
+
+                  <input
+                    id="textInput"
+                    name="text"
+                    type="text"
+                    placeholder="Type something"
+                    onChange={this.handleChange}
+                  />
                 </div>
                 <button id="sendButton" type="submit">
                   Send
