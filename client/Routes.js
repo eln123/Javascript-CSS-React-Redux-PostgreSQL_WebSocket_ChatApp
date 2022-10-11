@@ -31,9 +31,7 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/message" component={ClientSideSocket} />
             <Route path="/conversation" component={ContactList} />
-
             <Redirect to="/conversation" />
           </Switch>
         ) : (

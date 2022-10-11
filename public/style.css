@@ -12,13 +12,19 @@ label {
 }
 
 nav {
-  background-color: #255b95
+  background-color: rgb(51, 138, 224);
 }
 
 nav a {
   display: inline-block;
+  align-self: flex-end;
   margin: 1em;
   color: white;
+}
+
+#logoutLink {
+ margin-left: 90%;
+ font-size: 20px
 }
 
 #homeContainer a {
@@ -32,59 +38,118 @@ form div {
 }
 
 #nameOfAppHeader {
-  color:  #255b95
+  color:  rgb(51, 138, 224);
+}
+
+#contactListComponentContainer {
+  display: grid;
+  height: 100vh;
+  width: 100vw;
+  grid-template-areas: 
+    "contactList messageAndTextFormDiv";
+  grid-template-columns: 1fr 3fr;
+ 
+}
+
+#messageAndTextFormDiv {
+  grid-area: "messageAndTextFormDiv";
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 80vh
 }
 
 #contactContainer {
   display: grid;
-  width: 15vw;
+  grid-area: "contactList";
   grid-template-columns: 1fr;
+  align-content: start;
+  border-right: 3px solid gray;
+  height: 85vh;
+  justify-content: center
 }
 
-#contact {
-  list-style-type: none;
-  border: 2px solid white;
-  padding: 1em 1.5em
+#contactListHeader {
+  font-size: 40px;
+  font-style: bold;
+  color: rgb(51, 138, 224);
+  margin-left: 50%;
+  transform: translateX(-50%)
 }
 
-#messageList {
-  width: 60em;
-  height: 60em;
-  margin-left: 20%;
+#contactButton {
+  background-color:  rgb(51, 138, 224);
+  padding: 1.5em 1em 1.5em 1em;
+  font-size: 20px;
+  height: 10%;
+  width: 60%;
+  margin-top: 10%;
+  color: white;
+  margin-left: 50%;
+  transform: translateX(-50%)
 }
+
+#textInput {
+ margin-left: 10vw;
+  font-size: 25px;
+  height: 50px;
+  width: 75ch;
+  background-color: white;
+}
+
+#sendButton {
+  height: 75px;
+  width: 75px;
+  border-radius: 10px;
+  background-color:  rgb(51, 138, 224);
+  color: white
+}
+
+
 
 #sentMessage {
   list-style-type: none;
-  
+  width: 40vw;
   padding: 1em 1.5em;
   background-color: rgb(51, 138, 224);
   color: white;
-  margin: 5px
+  margin: 5px;
+  position: relative;
+  left: 25vw;
+  border-radius: 10px
 }
 
 .sentTemporary {
   list-style-type: none;
-
+  width: 40vw;
   padding: 1em 1.5em;
   background-color:  rgb(51, 138, 224);
   color: white;
-  margin: 5px
+  margin: 5px;
+  position: relative;
+  left: 25vw;
+  border-radius: 10px
 }
 
 #receivedMessage {
   list-style-type: none;
-
+  width: 40vw;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
-  margin: 5px
+  margin: 5px;
+  border-radius: 10px
 }
 
 .receivedTemporary {
   list-style-type: none;
- 
+  width: 40vw;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
-  margin: 5px
+  margin: 5px;
+  border-radius: 10px
 }
+
+
+

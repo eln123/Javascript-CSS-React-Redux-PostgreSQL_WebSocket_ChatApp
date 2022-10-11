@@ -82,8 +82,7 @@ serverSocket.on("connection", (socket) => {
     }
   });
 
-  socket.on("join-room", (room, cb) => {
+  socket.on("join-room", (room) => {
     socket.join(room);
-    cb(`Joined ${room}`);
   });
 });
