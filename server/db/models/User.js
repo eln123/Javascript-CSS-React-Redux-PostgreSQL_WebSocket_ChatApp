@@ -4,7 +4,6 @@ const Message = require("./Message");
 const Contact = require("./Contact");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
-const axios = require("axios");
 
 const SALT_ROUNDS = 5;
 
