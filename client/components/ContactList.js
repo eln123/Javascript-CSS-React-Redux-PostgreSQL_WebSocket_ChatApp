@@ -2,8 +2,12 @@ import { render } from "enzyme";
 import React from "react";
 import { connect } from "react-redux";
 import { clientSideFunc, displayMessage, displaySentMessage } from "../socket";
-
-import { getMessages, me } from "../store/auth";
+import {
+  getMostRecentMessage,
+  getMostRecentMessageSender,
+  getMessagesForContact,
+} from "../socket/helper";
+import { me } from "../store/auth";
 import history from "../history";
 import axios from "axios";
 const html = require("html-template-tag");
@@ -108,41 +112,57 @@ export class ContactList extends React.Component {
 
   render() {
     const user = this.props.user;
+    const messages = this.props.user.messages;
 
-    const contacts = user.contacts.map((contact) => {
+    let contacts = user.contacts.map((contact) => {
       contact.room = `${Math.min(
         user.phoneNumber,
         contact.phoneNumber
       )}${Math.max(user.phoneNumber, contact.phoneNumber)}`;
+      contact.messages = getMessagesForContact(contact, messages);
+      contact.mostRecentMessage = getMostRecentMessage(contact);
+      contact.mostRecentMessageSender = getMostRecentMessageSender(
+        contact,
+        user
+      );
       return contact;
     });
-
-    const messages = this.props.user.messages;
+    if (this.state.contact) console.log("contact", this.state.contact);
 
     return (
-      <div>
-        <div id="message-container"></div>
+      <div id="contactListOutermostContainer">
         <div id="contactListComponentContainer">
           {contacts ? (
             <ul id="contactContainer">
               <h3 id="contactListHeader">Select contact</h3>{" "}
-              {contacts.map((contact, index) => (
-                <button
-                  id="contactButton"
-                  type="submit"
-                  className="joinButton"
-                  key={contact.id}
-                  onClick={(e) => this.selectContact(contact, e)}
-                >
-                  {contact.contactName}
-                </button>
-              ))}
+              {contacts.map((contact, index) => {
+                return (
+                  <button
+                    id="contactButton"
+                    type="submit"
+                    className="joinButton"
+                    key={contact.id}
+                    onClick={(e) => this.selectContact(contact, e)}
+                  >
+                    <h5 id="contactName">{contact.contactName}</h5>
+                    <small id="mostRecentMessage">
+                      {contact.mostRecentMessageSender}
+                      {contact.mostRecentMessage}
+                    </small>
+                    {/* {messageToDisplay} */}
+                  </button>
+                );
+              })}
             </ul>
           ) : null}
           {this.state.contact ? (
             <div id="messageAndTextFormDiv">
+              <div id="headerDivInMessagePanel">
+                <h1 id="contactHeaderInMessagePanel">
+                  {this.state.contact.contactName}
+                </h1>
+              </div>
               <ul id="messageList">
-                {" "}
                 {messages
                   .filter(
                     (message) => message.roomNumber === this.state.contact.room
@@ -153,7 +173,6 @@ export class ContactList extends React.Component {
                     </li>
                   ))}
               </ul>
-
               <form id="textForm" onSubmit={this.handleSubmit} name={name}>
                 <div>
                   <label htmlFor="text">{/* <small>text</small> */}</label>
@@ -186,8 +205,6 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    getMessages: (user, room) => dispatch(getMessages(user, room)),
-
     loadInitialData() {
       dispatch(me());
     },

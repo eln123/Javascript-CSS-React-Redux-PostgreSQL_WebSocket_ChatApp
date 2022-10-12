@@ -10,10 +10,28 @@ const AuthForm = (props) => {
 
   return (
     <div>
+      <h1>Instructions:</h1>
+      <ol id="instructionsList">
+        <li>Log in below with: username - ethan, password - 123</li>
+        <li>
+          Click on Helen on the left hand side. You will see messages pop up{" "}
+        </li>
+        <li>Open another tab</li>
+        <li>Log in below with: username - helen, password - 123</li>
+        <li>
+          Click on Ethan on the left hand side. You will see the messages pop up
+        </li>
+        <li>Type in a message box and start sending! </li>
+        <li>
+          Navigate around to other contacts and messages, then navigate back.
+          Messages will be saved!
+        </li>
+      </ol>
       <h3>
         Dummy Accounts - username: ethan, password: 123; username: helen,
         password: 123
       </h3>
+
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="username">

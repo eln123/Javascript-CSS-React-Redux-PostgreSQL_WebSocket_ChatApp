@@ -54,7 +54,7 @@ User.authenticate = async function ({ username, password }) {
   return user.generateToken();
 };
 
-User.findByToken = async function (token, model) {
+User.findByToken = async function (token) {
   try {
     const { id } = await jwt.verify(token, process.env.JWT);
     const [user] = await User.findAll({
@@ -65,7 +65,9 @@ User.findByToken = async function (token, model) {
         {
           model: Message,
         },
-        { model: Contact },
+        {
+          model: Contact,
+        },
       ],
     });
     if (!user) {
