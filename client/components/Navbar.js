@@ -5,7 +5,6 @@ import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-    <h1 id="nameOfAppHeader">Socket Chat App</h1>
     <nav>
       {isLoggedIn ? (
         <div>

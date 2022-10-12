@@ -27,13 +27,7 @@ router.post("/signup", async (req, res, next) => {
 
 router.get("/me", async (req, res, next) => {
   try {
-    res.send(
-      await User.findByToken(req.headers.authorization, {
-        include: {
-          model: Message,
-        },
-      })
-    );
+    res.send(await User.findByToken(req.headers.authorization));
   } catch (ex) {
     next(ex);
   }
