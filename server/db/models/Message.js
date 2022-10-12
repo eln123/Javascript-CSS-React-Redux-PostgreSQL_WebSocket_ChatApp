@@ -22,6 +22,13 @@ const Message = db.define("message", {
   roomNumber: {
     type: Sequelize.STRING,
   },
+  time: {
+    type: Sequelize.DATE,
+  },
+});
+
+Message.beforeCreate((message) => {
+  message.time = new Date();
 });
 
 module.exports = Message;

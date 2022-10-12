@@ -90,7 +90,7 @@ export class ContactList extends React.Component {
     );
     displaySentMessage(message, user, contact);
   }
-  async selectContact(contact, e) {
+  selectContact(contact, e) {
     e.preventDefault();
     let temporarySent = [...document.getElementsByClassName("sentTemporary")];
     let temporaryReceived = [
@@ -127,7 +127,6 @@ export class ContactList extends React.Component {
       );
       return contact;
     });
-    if (this.state.contact) console.log("contact", this.state.contact);
 
     return (
       <div id="contactListOutermostContainer">
