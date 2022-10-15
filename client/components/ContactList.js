@@ -133,7 +133,7 @@ export class ContactList extends React.Component {
         <div id="contactListComponentContainer">
           {contacts ? (
             <ul id="contactContainer">
-              <h3 id="contactListHeader">Select contact</h3>{" "}
+              <h3 id="contactListHeader">List of contacts</h3>{" "}
               {contacts.map((contact, index) => {
                 return (
                   <button
@@ -172,6 +172,7 @@ export class ContactList extends React.Component {
                     </li>
                   ))}
               </ul>
+
               <form id="textForm" onSubmit={this.handleSubmit} name={name}>
                 <div>
                   <label htmlFor="text">{/* <small>text</small> */}</label>
