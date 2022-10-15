@@ -73,12 +73,15 @@ export class ContactList extends React.Component {
   }
   handleSubmit(evt, contact) {
     evt.preventDefault();
+    if (!this.state.message.length) return; // this solves problem of hitting enter with no message typed
     const room = this.state.contact.room;
     const contactPhoneNumber = this.state.contact.phoneNumber;
     let textInput = document.getElementById("textInput");
     textInput.value = "";
     const message = this.state.message;
-
+    this.state.message = ""; // this solves problem of sending a message, but still having that message on state
+    // because of its still on state, you can hit enter twice, with no inputValue the second time (nothing typed in the input box)
+    // and it will send the message again that was just sent
     const user = this.props.user;
 
     this.state.socket.emit(
