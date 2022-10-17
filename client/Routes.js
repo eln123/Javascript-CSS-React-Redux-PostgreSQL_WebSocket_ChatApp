@@ -8,6 +8,7 @@ import ContactList from "./components/ContactList";
 import { me } from "./store";
 import history from "./history";
 import { clientSideFunc } from "./socket";
+import { setSocket } from "./store/socket";
 import Conversation from "./components/Conversation";
 
 /**
@@ -16,13 +17,11 @@ import Conversation from "./components/Conversation";
 class Routes extends Component {
   componentDidMount() {
     this.props.loadInitialData();
+    const auth = this.props.auth;
+    const socket = clientSideFunc(auth);
+    console.log("socket", socket);
 
-    // let localStorage = window.localStorage;
-
-    // let connected = localStorage.getItem("connected");
-
-    // localStorage.setItem("connected", true);
-    // clientSideFunc(auth);
+    this.props.setSocket(socket);
   }
   render() {
     const { isLoggedIn, auth } = this.props;
@@ -55,6 +54,7 @@ const mapState = (state) => {
     // Otherwise, state.auth will be an empty object, and state.auth.id will be falsey
     isLoggedIn: !!state.auth.id,
     auth: state.auth,
+    socket: state.socket,
   };
 };
 
@@ -62,6 +62,9 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData() {
       dispatch(me());
+    },
+    setSocket(socket) {
+      dispatch(setSocket(socket));
     },
   };
 };
