@@ -49,7 +49,6 @@ export class ContactList extends React.Component {
     });
     this.state.contacts = contacts;
 
-    // const socket = clientSideFunc(user);
     const socket = this.props.socket;
 
     let temporarySent = [...document.getElementsByClassName("sentTemporary")];
@@ -93,6 +92,8 @@ export class ContactList extends React.Component {
       user.phoneNumber,
       contactPhoneNumber
     );
+    console.log("room", room);
+
     displaySentMessage(message, user, contact);
   }
   selectContact(contact, e) {

@@ -68,10 +68,22 @@ export const clientSideFunc = (auth) => {
     console.log("Connected to server");
 
     clientSocket.on("receive-message", (message, user, contact) => {
-      console.log("received", user);
-
       displayReceivedMessage(message, user, contact);
     });
+    clientSocket.on("joined-room", (message) => {
+      console.log(message);
+    });
+
+    clientSocket.on("userNoExist", (message) => {
+      console.log("sljf");
+      console.log(message);
+      return;
+    });
+
+    // socket.on("contact-added", (message) => console.log(message));
+    // socket.on("user-doesn't-exist", (message) => {
+    //   console.log(message);
+    // });
   });
 
   return clientSocket;
