@@ -10,7 +10,7 @@ const Contact = db.define("contact", {
 
   contactName: {
     type: Sequelize.STRING,
-    unique: true,
+
     allowNull: false,
   },
   phoneNumber: {
@@ -19,6 +19,7 @@ const Contact = db.define("contact", {
       len: [9, 10],
       isNumeric: true,
     },
+    unique: true,
   },
 });
 

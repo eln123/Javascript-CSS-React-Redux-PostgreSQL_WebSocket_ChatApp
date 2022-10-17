@@ -70,6 +70,7 @@ form div {
 
 #contactContainer {
 display: flex;
+
 flex-direction: column;
 padding: 0 0 0 0;
 margin: 0 0 0 0;
@@ -103,6 +104,11 @@ height: 85vh;
   color: black;
 }
 
+.hide {
+  display: none
+}
+
+
 #contactName {
   padding: 0 0 0 0;
   margin: 10px 0 10px 0;
@@ -119,8 +125,6 @@ height: 85vh;
   overflow: hidden
 
 }
-
-
 
 #sentMessage {
   display: flex;
