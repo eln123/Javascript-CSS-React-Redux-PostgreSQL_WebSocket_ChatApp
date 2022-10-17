@@ -20,6 +20,10 @@ class AddContact extends React.Component {
   submitHandler(event) {
     event.preventDefault();
     const userPhoneNumber = this.props.user.phoneNumber;
+    let contactNameInput = document.getElementById("contactNameInput");
+    contactNameInput.value = "";
+    let phoneNumberInput = document.getElementById("phoneNumberInput");
+    phoneNumberInput.value = "";
 
     const socket = this.props.socket;
     if (this.state.phoneNumber.length > 10) return;
@@ -42,6 +46,7 @@ class AddContact extends React.Component {
         <form onSubmit={this.submitHandler}>
           <label>Name:</label>
           <input
+            id="contactNameInput"
             value={this.state.contactName}
             type="text"
             name="contactName"
@@ -49,6 +54,7 @@ class AddContact extends React.Component {
           ></input>
           <label>PhoneNumber:</label>
           <input
+            id="phoneNumberInput"
             value={this.state.phoneNumber}
             type="number"
             name="phoneNumber"

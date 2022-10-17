@@ -31,9 +31,10 @@ export class ContactList extends React.Component {
       contact: {},
       message: "",
       text: "",
-      socket: {},
+      search: "",
     };
     this.selectContact = this.selectContact.bind(this);
+    this.searchContact = this.searchContact.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
@@ -116,6 +117,12 @@ export class ContactList extends React.Component {
     this.props.loadInitialData();
     socket.emit("join-room", contact.room);
   }
+  searchContact(evt) {
+    this.setState({
+      ...this.state,
+      search: evt.target.value,
+    });
+  }
 
   render() {
     const user = this.props.user;
@@ -134,6 +141,12 @@ export class ContactList extends React.Component {
       );
       return contact;
     });
+    if (this.state.search.length) {
+      contacts = contacts.filter((contact) =>
+        contact.contactName.includes(this.state.search)
+      );
+      console.log("newContacts", contacts);
+    }
 
     return (
       <div id="contactListOutermostContainer">
@@ -141,6 +154,13 @@ export class ContactList extends React.Component {
           {contacts ? (
             <ul id="contactContainer">
               <h3 id="contactListHeader">List of contacts</h3>{" "}
+              <label htmlFor="search">Search Users</label>
+              <input
+                style={{ marginBottom: 50, width: "100%" }}
+                type="search"
+                id="search"
+                onChange={this.searchContact}
+              ></input>
               {contacts.map((contact, index) => {
                 return (
                   <button
