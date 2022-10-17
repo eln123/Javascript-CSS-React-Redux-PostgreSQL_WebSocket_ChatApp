@@ -37,52 +37,78 @@ serverSocket.on("connection", (socket) => {
   }, 1000);
 
   socket.on("send-message", async (message, room, sender, receiver) => {
-    if (room === "") {
-      socket.broadcast.emit("receive-message", message);
-    } else {
-      const messageCreated = await Message.create({
-        sender: sender,
-        receiver: receiver,
-        content: message,
-        roomNumber: room,
-      });
+    const [contact] = await User.findAll({
+      where: {
+        phoneNumber: receiver,
+      },
+      include: {
+        model: Message,
+      },
+    });
+    if (!contact) {
+      console.log("yo");
+      const errorMessage = "user doesn't exist";
+      socket.to(room).emit("userNoExist", errorMessage);
+      console.log("sentBackToRoom", errorMessage);
+      return;
+    }
+
+    const messageCreated = await Message.create({
+      sender: sender,
+      receiver: receiver,
+      content: message,
+      roomNumber: room,
+    });
+    const [user] = await User.findAll({
+      where: {
+        phoneNumber: sender,
+      },
+      include: {
+        model: Message,
+      },
+    });
+
+    await user.addMessage(messageCreated);
+    await contact.addMessage(messageCreated);
+
+    // const [sendBack] = await User.findAll({
+    //   where: {
+    //     phoneNumber: sender,
+    //   },
+    //   include: [
+    //     {
+    //       model: Message,
+    //     },
+    //     { model: Contact },
+    //   ],
+    // });
+
+    socket.to(room).emit("receive-message", messageCreated, user, contact);
+  });
+
+  socket.on(
+    "addContact",
+    async (userPhoneNumber, contactName, contactPhoneNumber) => {
       const [user] = await User.findAll({
         where: {
-          phoneNumber: sender,
-        },
-        include: {
-          model: Message,
+          phoneNumber: userPhoneNumber,
         },
       });
-      const [contact] = await User.findAll({
-        where: {
-          phoneNumber: receiver,
-        },
-        include: {
-          model: Message,
-        },
+      const contactCreated = await Contact.create({
+        contactHolder: userPhoneNumber,
+        contactName: contactName,
+        phoneNumber: contactPhoneNumber,
       });
-
-      await user.addMessage(messageCreated);
-      await contact.addMessage(messageCreated);
-
-      // const [sendBack] = await User.findAll({
-      //   where: {
-      //     phoneNumber: sender,
-      //   },
-      //   include: [
-      //     {
-      //       model: Message,
-      //     },
-      //     { model: Contact },
-      //   ],
-      // });
-
-      socket.to(room).emit("receive-message", messageCreated, user, contact);
+      await user.addContact(contactCreated);
+      const message = "contact was added - from back end";
+      socket.emit("contact-added", message);
     }
-  });
+  );
 
   socket.on("join-room", (room) => {
     socket.join(room);
+    console.log("joined", room);
+    const message = `joined ${room}`;
+    socket.to(room).emit("joined-room", message);
   });
 });

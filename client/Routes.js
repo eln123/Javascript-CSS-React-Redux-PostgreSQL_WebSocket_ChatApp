@@ -10,13 +10,16 @@ import history from "./history";
 import { clientSideFunc } from "./socket";
 import { setSocket } from "./store/socket";
 import Conversation from "./components/Conversation";
+import AddContact from "./components/AddContact";
 
 /**
  * COMPONENT
  */
 class Routes extends Component {
   componentDidMount() {
-    this.props.loadInitialData();
+    if (history.location.pathname !== "conversation") {
+      this.props.loadInitialData();
+    }
     const auth = this.props.auth;
     const socket = clientSideFunc(auth);
     console.log("socket", socket);
@@ -31,6 +34,7 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/conversation" component={ContactList} />
+            <Route path="/addContact" component={AddContact} />
             <Redirect to="/conversation" />
           </Switch>
         ) : (
