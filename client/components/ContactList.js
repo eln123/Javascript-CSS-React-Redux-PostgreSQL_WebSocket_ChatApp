@@ -49,8 +49,8 @@ export class ContactList extends React.Component {
     });
     this.state.contacts = contacts;
 
-    const socket = clientSideFunc(user);
-    this.state.socket = socket;
+    // const socket = clientSideFunc(user);
+    const socket = this.props.socket;
 
     let temporarySent = [...document.getElementsByClassName("sentTemporary")];
     let temporaryReceived = [
@@ -73,7 +73,9 @@ export class ContactList extends React.Component {
   }
   handleSubmit(evt, contact) {
     evt.preventDefault();
+    const socket = this.props.socket;
     if (!this.state.message.length) return; // this solves problem of hitting enter with no message typed
+    if (!this.state.contact.phoneNumber) return;
     const room = this.state.contact.room;
     const contactPhoneNumber = this.state.contact.phoneNumber;
     let textInput = document.getElementById("textInput");
@@ -84,7 +86,7 @@ export class ContactList extends React.Component {
     // and it will send the message again that was just sent
     const user = this.props.user;
 
-    this.state.socket.emit(
+    socket.emit(
       "send-message",
       message,
       room,
@@ -95,6 +97,7 @@ export class ContactList extends React.Component {
   }
   selectContact(contact, e) {
     e.preventDefault();
+    const socket = this.props.socket;
     let temporarySent = [...document.getElementsByClassName("sentTemporary")];
     let temporaryReceived = [
       ...document.getElementsByClassName("receivedTemporary"),
@@ -110,7 +113,7 @@ export class ContactList extends React.Component {
     this.state.contact = contact;
 
     this.props.loadInitialData();
-    this.state.socket.emit("join-room", contact.room);
+    socket.emit("join-room", contact.room);
   }
 
   render() {
@@ -203,6 +206,7 @@ const mapState = (state) => {
   return {
     user: state.auth,
     messages: state.messages,
+    socket: state.socket,
   };
 };
 
