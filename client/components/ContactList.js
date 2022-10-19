@@ -143,7 +143,9 @@ export class ContactList extends React.Component {
     });
     if (this.state.search.length) {
       contacts = contacts.filter((contact) =>
-        contact.contactName.includes(this.state.search)
+        contact.contactName
+          .toLowerCase()
+          .includes(this.state.search.toLowerCase())
       );
       console.log("newContacts", contacts);
     }
@@ -154,9 +156,11 @@ export class ContactList extends React.Component {
           {contacts ? (
             <ul id="contactContainer">
               <h3 id="contactListHeader">List of contacts</h3>{" "}
-              <label htmlFor="search">Search Users</label>
+              <label id="contactListSearchBar" htmlFor="search">
+                Search
+              </label>
               <input
-                style={{ marginBottom: 50, width: "100%" }}
+                style={{ fontSize: 20, height: "5vh" }}
                 type="search"
                 id="search"
                 onChange={this.searchContact}

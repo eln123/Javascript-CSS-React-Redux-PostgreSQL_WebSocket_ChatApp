@@ -9,8 +9,8 @@ const AuthForm = (props) => {
   const { name, displayName, handleSubmit, error } = props;
 
   return (
-    <div>
-      <h1>Instructions:</h1>
+    <div id="authFormContainer">
+      {/* <h1>Instructions:</h1>
       <ol id="instructionsList">
         <li>Log in below with: username - ethan, password - 123</li>
         <li>
@@ -30,23 +30,25 @@ const AuthForm = (props) => {
       <h3>
         Dummy Accounts - username: ethan, password: 123; username: helen,
         password: 123
-      </h3>
+      </h3> */}
 
-      <form onSubmit={handleSubmit} name={name}>
-        <div>
+      <form id="authForm" onSubmit={handleSubmit} name={name}>
+        <div id="authFormChild">
           <label htmlFor="username">
             <small>Username</small>
           </label>
-          <input name="username" type="text" />
+          <input id="authFormInput" name="username" type="text" />
         </div>
-        <div>
+        <div id="authFormChild">
           <label htmlFor="password">
             <small>Password</small>
           </label>
-          <input name="password" type="password" />
+          <input id="authFormInput" name="password" type="password" />
         </div>
-        <div>
-          <button type="submit">{displayName}</button>
+        <div id="authFormChild">
+          <button id="loginButton" type="submit">
+            {displayName}
+          </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
