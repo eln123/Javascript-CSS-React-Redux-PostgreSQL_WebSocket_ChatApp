@@ -7,25 +7,22 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
     <nav>
       {isLoggedIn ? (
-        <div>
-          <a id="logoutLink" href="#" onClick={handleClick}>
-            Logout
-          </a>
+        <div id="navBarFlex">
           <Link id="navLink" to="/addContact">
             Add Contact page
           </Link>
           <Link id="navLink" to="/converation">
             Conversation
           </Link>
+          <a id="logoutLink" href="#" onClick={handleClick}>
+            Logout
+          </a>
         </div>
       ) : (
-        <div>
-          {/* The navbar will show these links before you log in */}
+        <div id="navBarFlex">
           <Link id="navLink" to="/login">
             Login
           </Link>
-          <Link to="/addContact">Add Contact page</Link>
-          <Link to="/converation">Conversation</Link>
         </div>
       )}
     </nav>

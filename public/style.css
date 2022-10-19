@@ -3,6 +3,36 @@ body {
   background-color: white
 }
 
+#authForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-size: 4vh
+}
+
+#authFormChild {
+  height: 5vh;
+  width: 20vw;
+  font-size: 4vh
+}
+
+#authFormInput {
+  height: 5vh;
+  width: 20vw;
+  font-size: 4vh
+}
+
+#loginButton {
+  font-size: 3vh;
+  padding: 5% 50% 5% 50%;
+  border-radius: 4%;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  background-color: rgb(51, 138, 224);
+  color: white
+}
+
 a {
   text-decoration: none;
 }
@@ -22,13 +52,11 @@ nav a {
   color: white;
 }
 
-#logoutLink {
- margin-left: 90%;
- font-size: 20px
-}
-
-#navLink {
-  display: block
+#navBarFlex {
+  display: flex;
+  justify-content: end;
+  padding-right: 50px;
+  font-size: 1.5vh
 }
 
 #homeContainer a {
@@ -66,7 +94,12 @@ form div {
   display: flex;
 }
 
-
+#contactListSearchBar {
+  font-size: 20px;
+  margin-left: 50%;
+  transform: translateX(-50%);
+ 
+}
 
 #contactContainer {
 display: flex;
