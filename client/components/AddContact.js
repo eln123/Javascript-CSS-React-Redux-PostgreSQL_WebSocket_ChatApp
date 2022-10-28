@@ -2,6 +2,8 @@ import React from "react";
 import { connect } from "react-redux";
 import { setSocketOntoRedux } from "../store/socket";
 // import { createNewContact } from "../store/contact";
+import history from "../history";
+import { me } from "../store/auth";
 
 class AddContact extends React.Component {
   constructor() {
@@ -17,7 +19,7 @@ class AddContact extends React.Component {
     const socket = this.props.socket;
     socket.on("contact-added", (message) => console.log(message));
   }
-  submitHandler(event) {
+  async submitHandler(event) {
     event.preventDefault();
     const userPhoneNumber = this.props.user.phoneNumber;
     let contactNameInput = document.getElementById("contactNameInput");
@@ -33,6 +35,8 @@ class AddContact extends React.Component {
       this.state.contactName,
       this.state.phoneNumber
     );
+    await this.props.loadInitialData();
+    history.push("/conversation");
   }
 
   handleChange(event) {
@@ -76,7 +80,9 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    // createNewContact: (contact) => dispatch(createNewContact(contact)),
+    loadInitialData() {
+      dispatch(me());
+    },
   };
 };
 
