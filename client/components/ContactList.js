@@ -154,12 +154,11 @@ export class ContactList extends React.Component {
           {contacts ? (
             <ul id="contactContainer">
               <h3 id="contactListHeader">List of contacts</h3>{" "}
-              <label id="contactListSearchBar" htmlFor="search">
-                Search
-              </label>
+              <label id="contactListSearchBar" htmlFor="search"></label>
               <input
-                style={{ fontSize: 20, height: "5vh" }}
+                style={{ fontSize: 20, height: "2vh" }}
                 type="search"
+                placeholder="search name"
                 id="search"
                 onChange={this.searchContact}
               ></input>
@@ -190,7 +189,14 @@ export class ContactList extends React.Component {
                   {this.state.contact.contactName}
                 </h1>
               </div>
-              <ul id="messageList">
+              <ul
+                id="messageList"
+                style={{
+                  overflowY: "auto",
+                  width: "70vw",
+                  borderRight: "2px solid gray",
+                }}
+              >
                 {messages
                   .filter(
                     (message) => message.roomNumber === this.state.contact.room

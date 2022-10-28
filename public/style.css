@@ -44,7 +44,6 @@ label {
 nav {
   background-color: rgb(51, 138, 224);
 }
-
 nav a {
   display: inline-block;
   align-self: flex-end;
@@ -98,7 +97,7 @@ form div {
   font-size: 20px;
   margin-left: 50%;
   transform: translateX(-50%);
- 
+
 }
 
 #contactContainer {
@@ -155,8 +154,7 @@ height: 85vh;
   word-wrap: break-word;
   padding: 0 0 0 10px;
   color: gray;
-  overflow: hidden
-
+  overflow: hidden;
 }
 
 #sentMessage {
@@ -169,7 +167,7 @@ height: 85vh;
   color: white;
   margin: 5px;
   position: relative;
-  left: 25vw;
+  left: 50%;
   border-radius: 10px
 }
 
@@ -181,28 +179,30 @@ height: 85vh;
   color: white;
   margin: 5px;
   position: relative;
-  left: 25vw;
+  left: 50%;
   border-radius: 10px
 }
 
 #receivedMessage {
   list-style-type: none;
-  width: 40vw;
+  width: 75ch;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
   margin: 5px;
+  left: 10%;
   border-radius: 10px
 }
 
 .receivedTemporary {
   list-style-type: none;
-  width: 40vw;
+  width: 75ch;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
   margin: 5px;
-  border-radius: 10px
+  border-radius: 10px;
+  left: 10%;
 }
 
 #instructionsList {
@@ -211,7 +211,7 @@ height: 85vh;
 
 
 
-  #messageAndTextFormDiv {
+#messageAndTextFormDiv {
     /* grid-area: "messageAndTextFormDiv"; */
     flex-basis: 90%;
     flex-grow: 9;
@@ -221,6 +221,7 @@ height: 85vh;
     justify-content: flex-end;
     height: 80vh;
     overflow: hidden;
+ 
     position: relative;
     
   }
