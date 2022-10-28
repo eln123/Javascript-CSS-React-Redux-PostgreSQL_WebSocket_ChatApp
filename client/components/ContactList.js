@@ -38,8 +38,8 @@ export class ContactList extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
-  componentDidMount() {
-    this.props.loadInitialData();
+  async componentDidMount() {
+    await this.props.loadInitialData();
     const user = this.props.user;
     const contacts = user.contacts.map((contact) => {
       contact.room = `${Math.min(
@@ -93,7 +93,6 @@ export class ContactList extends React.Component {
       user.phoneNumber,
       contactPhoneNumber
     );
-    console.log("room", room);
 
     displaySentMessage(message, user, contact);
   }
@@ -147,7 +146,6 @@ export class ContactList extends React.Component {
           .toLowerCase()
           .includes(this.state.search.toLowerCase())
       );
-      console.log("newContacts", contacts);
     }
 
     return (
