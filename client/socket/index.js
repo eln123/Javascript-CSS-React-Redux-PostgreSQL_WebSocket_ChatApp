@@ -72,6 +72,7 @@ export const clientSideFunc = (auth) => {
 
   function displayReceivedMessage(message, user, contact) {
     removeMostRecentClass();
+    console.log(message);
     const messages = document.getElementById("messageList");
     const newMessage = document.createElement("li");
     const sender = message.sender;
@@ -81,21 +82,26 @@ export const clientSideFunc = (auth) => {
 
     const receivedClass = "receivedTemporary";
     const sentClass = "sentTemporary";
-
-    newMessage.classList.append(receivedClass, "receivedMessageMostRecent");
     newMessage.textContent = content;
+    newMessage.classList.add(receivedClass);
     messages.append(newMessage);
+    const latestMessage = messages.lastChild;
+    if (latestMessage) {
+      messages.scrollTo({
+        top: latestMessage.offsetTop,
+        behavior: "auto",
+      });
+    }
   }
 
   clientSocket.on("connect", () => {
     console.log("Connected to server");
 
     clientSocket.on("receive-message", (message, user, contact) => {
+      console.log("line94");
       displayReceivedMessage(message, user, contact);
     });
-    clientSocket.on("joined-room", (message) => {
-      console.log(message);
-    });
+    clientSocket.on("joined-room", (message) => {});
 
     clientSocket.on("userNoExist", (message) => {
       console.log("sljf");
