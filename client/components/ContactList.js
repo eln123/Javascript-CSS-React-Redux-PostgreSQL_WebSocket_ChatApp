@@ -51,7 +51,7 @@ export class ContactList extends React.Component {
     });
     this.state.contacts = contacts;
 
-    const socket = this.props.socket;
+    // const socket = this.props.socket;
 
     let temporarySent = [...document.getElementsByClassName("sentTemporary")];
     let temporaryReceived = [
