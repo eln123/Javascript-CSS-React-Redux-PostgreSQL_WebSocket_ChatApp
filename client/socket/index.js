@@ -12,15 +12,37 @@ export const setId = (message, user) => {
   }
 };
 
+export function removeMostRecentClass() {
+  let [mostRecentWasASentMessage] = [
+    ...document.getElementsByClassName("sentMessageMostRecent"),
+  ];
+
+  if (mostRecentWasASentMessage) {
+    console.log("most recent a sent");
+    mostRecentWasASentMessage.classList.remove("sentMessageMostRecent");
+  }
+  let [mostRecentWasAReceivedMessage] = [
+    ...document.getElementsByClassName("receivedMessageMostRecent"),
+  ];
+  if (mostRecentWasAReceivedMessage) {
+    mostRecentWasAReceivedMessage.classList.remove("receivedMessageMostRecent");
+  }
+}
+
 export function displaySentMessage(message, sender, receiver) {
   const messages = document.getElementById("messageList");
   const newMessage = document.createElement("li");
-
   const className = "sentTemporary";
-  newMessage.className = className;
+  removeMostRecentClass();
+  newMessage.classList.add(className, "sentMessageMostRecent");
   newMessage.textContent = message;
 
   messages.append(newMessage);
+  // newMessage.scrollIntoView();
+  messages.scrollTo({
+    top: newMessage.offsetTop,
+    behavior: "auto",
+  });
 }
 
 export const helper = (user, contact) => {
@@ -49,6 +71,7 @@ export const clientSideFunc = (auth) => {
   const onMessagePage = joinRoomButtons && messageInput && form ? true : false;
 
   function displayReceivedMessage(message, user, contact) {
+    removeMostRecentClass();
     const messages = document.getElementById("messageList");
     const newMessage = document.createElement("li");
     const sender = message.sender;
@@ -59,7 +82,7 @@ export const clientSideFunc = (auth) => {
     const receivedClass = "receivedTemporary";
     const sentClass = "sentTemporary";
 
-    newMessage.className = receivedClass;
+    newMessage.classList.append(receivedClass, "receivedMessageMostRecent");
     newMessage.textContent = content;
     messages.append(newMessage);
   }

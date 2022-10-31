@@ -44,6 +44,7 @@ label {
 nav {
   background-color: rgb(51, 138, 224);
 }
+
 nav a {
   display: inline-block;
   align-self: flex-end;
@@ -81,7 +82,6 @@ form div {
 }
 
 #contactListComponentContainer {
-
   padding: 0 0 0 0;
   margin: 0 0 0 -7px;
   height: 100vh;
@@ -97,12 +97,10 @@ form div {
   font-size: 20px;
   margin-left: 50%;
   transform: translateX(-50%);
-
 }
 
 #contactContainer {
 display: flex;
-
 flex-direction: column;
 padding: 0 0 0 0;
 margin: 0 0 0 0;
@@ -116,7 +114,6 @@ height: 85vh;
   font-size: 25px;
   font-style: bold;
   color: rgb(51, 138, 224);
- 
   align-self: center
   
 }
@@ -157,11 +154,38 @@ height: 85vh;
   overflow: hidden;
 }
 
-#sentMessage {
+.sentMessageMostRecent {
+  box-sizing: content-box;
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
+  max-width: 75ch;
+  padding: 1em 1.5em;
+  background-color: rgb(51, 138, 224);
+  color: white;
+  margin: 5px;
+  position: relative;
+  left: 50%;
+  border-radius: 10px
+}
+
+.receivedMessageMostRecent {
+  list-style-type: none;
   width: 75ch;
+  padding: 1em 1.5em;
+  background-color: lightgray;
+  color: white;
+  margin: 5px;
+  left: 50%;
+  border-radius: 10px
+}
+
+.sentMessage {
+  box-sizing: content-box;
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  max-width: 75ch;
   padding: 1em 1.5em;
   background-color: rgb(51, 138, 224);
   color: white;
@@ -183,14 +207,14 @@ height: 85vh;
   border-radius: 10px
 }
 
-#receivedMessage {
+.receivedMessage {
   list-style-type: none;
   width: 75ch;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
   margin: 5px;
-  left: 10%;
+  left: 50%;
   border-radius: 10px
 }
 
@@ -202,7 +226,7 @@ height: 85vh;
   color: white;
   margin: 5px;
   border-radius: 10px;
-  left: 10%;
+  left: 40%;
 }
 
 #instructionsList {
@@ -221,9 +245,7 @@ height: 85vh;
     justify-content: flex-end;
     height: 80vh;
     overflow: hidden;
- 
     position: relative;
-    
   }
   
   #headerDivInMessagePanel {
@@ -233,19 +255,18 @@ height: 85vh;
     width: 100vw;
     height: 5vh;
     background-color: white;
-    border-bottom: 1px solid black
+    border-bottom: 1px solid black;
+    text-align: center
   }
   
   #contactHeaderInMessagePanel {
     position: absolute;
-    left: 300px
+    left: 35vw;
   }
   
   #textInput {
-    
     margin-left: 10vw;
     font-size: 25px;
-    
     padding: 5px 5px 5px 5px;
     width: 50vw;
     word-wrap: break-word;
