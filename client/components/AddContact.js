@@ -45,26 +45,78 @@ class AddContact extends React.Component {
 
   render() {
     return (
-      <div>
-        <h1>Create new contact:</h1>
-        <form onSubmit={this.submitHandler}>
-          <label>Name:</label>
+      <div
+        style={{
+          height: "80vh",
+          width: "50vw",
+          borderRadius: "10px",
+          border: "1px solid black",
+          position: "absolute",
+          left: "50%",
+          top: "10%",
+          transform: "translateX(-50%)",
+          backgroundColor: "whiteSmoke",
+          display: "flex",
+          flexDirection: "column",
+        }}
+      >
+        <h1 style={{ textAlign: "center" }}>Create new contact:</h1>
+        <form
+          style={{
+            alignSelf: "center",
+            display: "flex",
+            flexDirection: "column",
+            gap: "5px",
+            height: "90%",
+            width: "100%",
+
+            justifyContent: "start",
+            fontSize: "24px",
+          }}
+          onSubmit={this.submitHandler}
+        >
+          <label style={{ textAlign: "center" }}>Name</label>
           <input
+            style={{
+              padding: "5px",
+              border: "1px solid black",
+              width: "20vw",
+              alignSelf: "center",
+            }}
             id="contactNameInput"
             value={this.state.contactName}
             type="text"
             name="contactName"
             onChange={this.handleChange}
           ></input>
-          <label>PhoneNumber:</label>
+          <label style={{ textAlign: "center" }}>PhoneNumber</label>
           <input
+            style={{
+              padding: "5px",
+              border: "1px solid black",
+              width: "20vw",
+              alignSelf: "center",
+            }}
             id="phoneNumberInput"
             value={this.state.phoneNumber}
-            type="number"
+            type="text"
             name="phoneNumber"
             onChange={this.handleChange}
           ></input>
-          <input type="submit" value="Submit" />
+          <input
+            style={{
+              padding: "10px",
+              border: "1px solid black",
+              marginTop: "10px",
+              color: "white",
+              fontSize: "28px",
+              width: "33vw",
+              alignSelf: "center",
+              backgroundColor: "rgb(51, 138, 224)",
+            }}
+            type="submit"
+            value="Submit"
+          />
         </form>
       </div>
     );

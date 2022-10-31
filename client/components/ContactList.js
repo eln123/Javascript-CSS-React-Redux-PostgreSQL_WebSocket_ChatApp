@@ -145,7 +145,10 @@ export class ContactList extends React.Component {
         user.phoneNumber,
         contact.phoneNumber
       )}${Math.max(user.phoneNumber, contact.phoneNumber)}`;
-      contact.messages = getMessagesForContact(contact, messages);
+      contact.messages = getMessagesForContact(
+        contact,
+        this.props.user.messages
+      );
       contact.mostRecentMessage = getMostRecentMessage(contact);
       contact.mostRecentMessageSender = getMostRecentMessageSender(
         contact,
@@ -153,6 +156,9 @@ export class ContactList extends React.Component {
       );
       return contact;
     });
+    if (contacts) {
+      console.log(contacts);
+    }
     if (this.state.search.length) {
       contacts = contacts.filter((contact) =>
         contact.contactName
