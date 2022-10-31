@@ -16,13 +16,14 @@ const html = require("html-template-tag");
  * COMPONENT
  */
 
-export const setIdOfMessage = (message, user) => {
+export const AddClassToMessage = (message, user) => {
   if (message.sender === user.phoneNumber) {
     return "sentMessage";
   } else {
     return "receivedMessage";
   }
 };
+
 export class ContactList extends React.Component {
   constructor() {
     super();
@@ -64,6 +65,16 @@ export class ContactList extends React.Component {
     }
 
     history.location.state = user.phoneNumber;
+  }
+  componentDidUpdate() {
+    const messages = document.getElementById("messageList");
+    const latestMessage = messages.lastChild;
+    if (latestMessage) {
+      messages.scrollTo({
+        top: latestMessage.offsetTop,
+        behavior: "auto",
+      });
+    }
   }
   handleChange(evt) {
     this.setState({
@@ -125,7 +136,9 @@ export class ContactList extends React.Component {
 
   render() {
     const user = this.props.user;
-    const messages = this.props.user.messages;
+    const messages = this.props.user.messages.filter(
+      (message) => message.roomNumber === this.state.contact.room
+    );
 
     let contacts = user.contacts.map((contact) => {
       contact.room = `${Math.min(
@@ -197,15 +210,18 @@ export class ContactList extends React.Component {
                   borderRight: "2px solid gray",
                 }}
               >
-                {messages
-                  .filter(
-                    (message) => message.roomNumber === this.state.contact.room
-                  )
-                  .map((message, index) => (
-                    <li id={`${setIdOfMessage(message, user)}`} key={index}>
+                {messages.map((message, index) => {
+                  let mappedMessage = (
+                    <li
+                      key={index}
+                      className={`${AddClassToMessage(message, user)}`}
+                    >
                       {message.content}
                     </li>
-                  ))}
+                  );
+
+                  return mappedMessage;
+                })}
               </ul>
 
               <form id="textForm" onSubmit={this.handleSubmit} name={name}>
