@@ -237,18 +237,44 @@ export class ContactList extends React.Component {
             </ul>
           ) : null}
           {this.state.contact ? (
-            <div id="messageAndTextFormDiv">
-              <div id="headerDivInMessagePanel">
-                <h1 id="contactHeaderInMessagePanel">
-                  {this.state.contact.contactName}
-                </h1>
-              </div>
+            <div
+              style={{
+                flexBasis: "90%",
+                flexGrow: "9",
+                flexShrink: "1",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "flex-end",
+                height: "80vh",
+                overflowY: "hidden",
+                position: "relative",
+              }}
+            >
+              <h1
+                style={{
+                  position: "absolute",
+                  justifySelf: "start",
+                  zIndex: "1",
+                  top: "5px",
+                  width: "70vw",
+                  textAlign: "center",
+                  marginBottom: "10px",
+                  height: "5vh",
+
+                  borderBottom: "1px solid black",
+                  overflow: "hidden",
+                }}
+              >
+                {this.state.contact.contactName}
+              </h1>
+
               <ul
                 id="messageList"
                 style={{
                   overflowY: "auto",
                   width: "70vw",
                   borderRight: "2px solid gray",
+                  marginTop: "8vh",
                 }}
               >
                 {messages.map((message, index) => {
