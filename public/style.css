@@ -110,20 +110,6 @@ height: 85vh;
   /* width: 100%; */
 }
 
-#contactButton {
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  border-left: none;
-  border-right: none;
-  padding: 0 0 0 0;
-  margin: 0 0 0 0;
-  font-size: 20px;
-  font-style: bold;
-  height: 10vh;
-  align-items: start;
-  color: black;
-}
 
 .hide {
   display: none
@@ -151,25 +137,27 @@ height: 85vh;
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  max-width: 75ch;
+  max-width: 60ch;
   padding: 1em 1.5em;
   background-color: rgb(51, 138, 224);
   color: white;
   margin: 5px;
   position: relative;
   left: 50%;
-  border-radius: 30px
+  border-radius: 30px;
+  word-break: "break-word"
 }
 
 .receivedMessageMostRecent {
   list-style-type: none;
-  width: 75ch;
+  width: 60ch;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
   margin: 5px;
   left: 50%;
-  border-radius: 30px
+  border-radius: 30px;
+  word-break: "break-word"
 }
 
 .sentMessage {
@@ -177,7 +165,7 @@ height: 85vh;
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  max-width: 65ch;
+  max-width: 45%;
   padding: 1em 1.5em;
   background-color: rgb(51, 138, 224);
   color: white;
@@ -187,12 +175,14 @@ height: 85vh;
   border-radius: 30px;
   display: flex;
   justify-content: start;
-  padding-left: 30px
+  padding-left: 30px;
+  word-break: break-word;
+  font-size: 18px
 }
 
 .sentTemporary {
   list-style-type: none;
-  width: 65ch;
+  max-width: 45%;
   padding: 1em 1.5em;
   background-color:  rgb(51, 138, 224);
   color: white;
@@ -202,12 +192,14 @@ height: 85vh;
   border-radius: 30px;
   display: flex;
   justify-content: start;
-  padding-left: 30px
+  padding-left: 30px;
+  font-size: 18px;
+  word-break: break-word
 }
 
 .receivedMessage {
   list-style-type: none;
-  width: 60ch;
+  max-width: 45%;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
@@ -216,12 +208,14 @@ height: 85vh;
   border-radius: 30px;
   display: flex;
   justify-content: end;
-  padding-right: 30px
+  padding-right: 30px;
+  word-break: break-word;
+  font-size: 18px
 }
 
 .receivedTemporary {
   list-style-type: none;
-  width: 60ch;
+  max-width: 45%;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
@@ -230,20 +224,13 @@ height: 85vh;
   left: 40%;
   display: flex;
   justify-content: end;
-  padding-right: 30px
+  padding-right: 30px;
+  font-size: 18px;
+  word-break: "break-word"
 }
 
-#instructionsList {
-  font-size: 16px
-}
 
 
-
-#messageAndTextFormDiv {
-    /* grid-area: "messageAndTextFormDiv"; */
- 
-  }
-  
   
   
   #textInput {

@@ -202,7 +202,13 @@ export class ContactList extends React.Component {
               </h3>{" "}
               <label id="contactListSearchBar" htmlFor="search"></label>
               <input
-                style={{ fontSize: 20, height: "2vh" }}
+                style={{
+                  fontSize: "20px",
+                  height: "3vh",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                  textAlign: "center",
+                }}
                 type="search"
                 placeholder="search name"
                 id="search"
@@ -217,23 +223,27 @@ export class ContactList extends React.Component {
                       backgroundColor: "white",
                       borderLeft: "none",
                       borderRight: "none",
-                      borderBottom: "1px lightgrey",
+                      borderBottom: "2px lightgrey",
                       padding: "0 0 0 0",
                       margin: "0 0 0 0",
                       fontSize: "20px",
                       fontStyle: "bold",
-                      height: "10vh",
                       alignItems: "start",
                       color: "black",
                     }}
-                    id="contactButton"
                     type="submit"
                     className="joinButton"
                     key={contact.id}
                     onClick={(e) => this.selectContact(contact, e)}
                   >
                     <h5 id="contactName">{contact.contactName}</h5>
-                    <small id="mostRecentMessage">
+                    <small
+                      style={{
+                        wordBreak: "break-word",
+                        padding: "0 5px 0 5px",
+                      }}
+                      id="mostRecentMessage"
+                    >
                       {contact.mostRecentMessageSender}
                       {contact.mostRecentMessage}
                       {contact.loggedIn}
@@ -288,6 +298,7 @@ export class ContactList extends React.Component {
                 {messages.map((message, index) => {
                   let mappedMessage = (
                     <li
+                      style={{ wordBreak: "break-word" }}
                       key={index}
                       className={`${AddClassToMessage(message, user)}`}
                     >
