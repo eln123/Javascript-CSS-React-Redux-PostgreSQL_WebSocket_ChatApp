@@ -158,7 +158,7 @@ height: 85vh;
   margin: 5px;
   position: relative;
   left: 50%;
-  border-radius: 10px
+  border-radius: 30px
 }
 
 .receivedMessageMostRecent {
@@ -169,7 +169,7 @@ height: 85vh;
   color: white;
   margin: 5px;
   left: 50%;
-  border-radius: 10px
+  border-radius: 30px
 }
 
 .sentMessage {
@@ -177,48 +177,59 @@ height: 85vh;
   display: flex;
   flex-wrap: wrap;
   list-style-type: none;
-  max-width: 75ch;
+  max-width: 65ch;
   padding: 1em 1.5em;
   background-color: rgb(51, 138, 224);
   color: white;
   margin: 5px;
   position: relative;
-  left: 50%;
-  border-radius: 10px
+  left: 45%;
+  border-radius: 30px;
+  display: flex;
+  justify-content: start;
+  padding-left: 30px
 }
 
 .sentTemporary {
   list-style-type: none;
-  width: 75ch;
+  width: 65ch;
   padding: 1em 1.5em;
   background-color:  rgb(51, 138, 224);
   color: white;
   margin: 5px;
   position: relative;
-  left: 50%;
-  border-radius: 10px
+  left: 45%;
+  border-radius: 30px;
+  display: flex;
+  justify-content: start;
+  padding-left: 30px
 }
 
 .receivedMessage {
   list-style-type: none;
-  width: 75ch;
+  width: 60ch;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
   margin: 5px;
   left: 50%;
-  border-radius: 10px
+  border-radius: 30px;
+  display: flex;
+  justify-content: end;
+  padding-right: 30px
 }
 
 .receivedTemporary {
   list-style-type: none;
-  width: 75ch;
+  width: 60ch;
   padding: 1em 1.5em;
   background-color: lightgray;
   color: white;
   margin: 5px;
-  border-radius: 10px;
+  border-radius: 30px;
   left: 40%;
+  display: flex;
+  justify-content: end
 }
 
 #instructionsList {
