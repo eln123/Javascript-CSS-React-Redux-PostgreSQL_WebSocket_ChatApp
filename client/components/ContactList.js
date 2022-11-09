@@ -172,7 +172,14 @@ export class ContactList extends React.Component {
         <div id="contactListComponentContainer">
           {contacts ? (
             <ul
-              style={{ overflow: "auto", textAlign: "center" }}
+              style={{
+                overflow: "auto",
+                textAlign: "center",
+                marginLeft: "50px",
+                marginRight: "50px",
+                marginTop: "20px",
+                borderLeft: "2px solid black",
+              }}
               id="contactContainer"
             >
               <h3
