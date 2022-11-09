@@ -34,7 +34,12 @@ class AddContact extends React.Component {
     let phoneNumberInput = document.getElementById("phoneNumberInput");
 
     const socket = this.props.socket;
-    if (this.state.phoneNumber.length > 10) return;
+    if (
+      this.state.phoneNumber.length > 10 ||
+      this.state.phoneNumber.length < 9 ||
+      this.state.contactName.length < 1
+    )
+      return;
     socket.emit(
       "addContact",
       userPhoneNumber,
@@ -63,13 +68,13 @@ class AddContact extends React.Component {
           left: "50%",
           top: "10%",
           transform: "translateX(-50%)",
-          backgroundColor: "whiteSmoke",
+          backgroundColor: "white",
           display: "flex",
           flexDirection: "column",
           position: "relative",
         }}
       >
-        <h1 style={{ textAlign: "center" }}>Create new contact:</h1>
+        <h1 style={{ textAlign: "center" }}></h1>
         <form
           style={{
             alignSelf: "center",
@@ -148,31 +153,60 @@ class AddContact extends React.Component {
           left: "50%",
           top: "10%",
           transform: "translateX(-50%)",
-          backgroundColor: "whiteSmoke",
+          backgroundColor: "white",
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center",
           position: "relative",
         }}
       >
-        <h1 style={{ textAlign: "center" }}>Successfully Added!</h1>
-        {/* <button
-          onClick={() => {
-            this.state.addAContact = true;
-            console.log(this.state);
+        <h1
+          style={{
+            textAlign: "center",
+            fontSize: "35px",
+            position: "absolute",
+            top: "20px",
+            left: "50%",
+            transform: "translateX(-50%)",
           }}
         >
-          Add Another?
-        </button> */}
-        <button
-          onClick={() => {
-            this.setState({ ...this.state, addAContact: true });
-          }}
+          Successfully Added!
+        </h1>
+        <div
+          style={{ display: "flex", flexDirection: "column", rowGap: "10px" }}
         >
-          Add another
-        </button>
-        <button onClick={() => history.push("/conversation")}>
-          Go back to home page
-        </button>
+          <button
+            style={{
+              width: "250px",
+              margin: "auto auto auto auto",
+              height: "5vh",
+              fontSize: "20px",
+              cursor: "pointer",
+              color: "white",
+              backgroundColor: "rgb(51, 138, 224)",
+            }}
+            onClick={() => {
+              this.setState({ ...this.state, addAContact: true });
+            }}
+          >
+            Add another
+          </button>
+          <button
+            style={{
+              width: "250px",
+              margin: "auto auto 40% auto",
+
+              height: "5vh",
+              fontSize: "20px",
+              cursor: "pointer",
+              color: "white",
+              backgroundColor: "rgb(51, 138, 224)",
+            }}
+            onClick={() => history.push("/conversation")}
+          >
+            Go back to home page
+          </button>
+        </div>
       </div>
     );
   }

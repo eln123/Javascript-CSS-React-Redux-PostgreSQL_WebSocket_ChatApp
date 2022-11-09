@@ -217,6 +217,7 @@ export class ContactList extends React.Component {
                       backgroundColor: "white",
                       borderLeft: "none",
                       borderRight: "none",
+                      borderBottom: "1px lightgrey",
                       padding: "0 0 0 0",
                       margin: "0 0 0 0",
                       fontSize: "20px",
