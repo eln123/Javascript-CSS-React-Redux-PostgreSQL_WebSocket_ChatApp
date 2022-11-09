@@ -18,6 +18,7 @@ class AddContact extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
+    this.setState({ ...this.state, addAContact: true });
     const socket = this.props.socket;
 
     socket.on("contact-added", (message) => {
@@ -154,15 +155,24 @@ class AddContact extends React.Component {
         }}
       >
         <h1 style={{ textAlign: "center" }}>Successfully Added!</h1>
-        <button
+        {/* <button
           onClick={() => {
             this.state.addAContact = true;
             console.log(this.state);
           }}
         >
           Add Another?
+        </button> */}
+        <button
+          onClick={() => {
+            this.setState({ ...this.state, addAContact: true });
+          }}
+        >
+          Add another
         </button>
-        <Link to={"/conversation"}>Go back to Home Page</Link>
+        <button onClick={() => history.push("/conversation")}>
+          Go back to home page
+        </button>
       </div>
     );
   }
