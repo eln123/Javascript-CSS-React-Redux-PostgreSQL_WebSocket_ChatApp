@@ -63,6 +63,13 @@ export class ContactList extends React.Component {
     }
 
     history.location.state = user.phoneNumber;
+    const socket = this.props.socket;
+    socket.on("friend-logged-in", async () => {
+      console.log("about to load");
+      await this.props.loadInitialData();
+      console.log("loaded");
+      this.setState({ ...this.state });
+    });
   }
   componentDidUpdate() {
     const messages = document.getElementById("messageList");

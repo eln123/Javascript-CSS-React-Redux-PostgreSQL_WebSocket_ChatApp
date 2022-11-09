@@ -30,7 +30,9 @@ const serverSocket = socket(server);
 
 serverSocket.on("connection", (socket) => {
   console.log(`Connection from client ${socket.id}`);
-
+  socket.on("someone-signed-in", async (id) => {
+    socket.broadcast.emit("friendLoggedIn", id);
+  });
   setInterval(() => {
     const time = new Date().toLocaleString();
     socket.emit("time-change", time);
