@@ -22,7 +22,6 @@ class Routes extends Component {
     }
     const auth = this.props.auth;
     const socket = clientSideFunc(auth);
-    console.log("socket", socket);
 
     this.props.setSocket(socket);
   }

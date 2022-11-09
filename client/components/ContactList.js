@@ -6,7 +6,7 @@ import {
   getMostRecentMessage,
   getMostRecentMessageSender,
   getMessagesForContact,
-} from "../socket/helper";
+} from "../helperFunctions/mostRecentMessageHelpers";
 import { me } from "../store/auth";
 import history from "../history";
 import axios from "axios";
@@ -51,8 +51,6 @@ export class ContactList extends React.Component {
     });
     this.state.contacts = contacts;
 
-    // const socket = this.props.socket;
-
     let temporarySent = [...document.getElementsByClassName("sentTemporary")];
     let temporaryReceived = [
       ...document.getElementsByClassName("receivedTemporary"),
@@ -68,12 +66,14 @@ export class ContactList extends React.Component {
   }
   componentDidUpdate() {
     const messages = document.getElementById("messageList");
-    const latestMessage = messages.lastChild;
-    if (latestMessage) {
-      messages.scrollTo({
-        top: latestMessage.offsetTop,
-        behavior: "auto",
-      });
+    if (messages) {
+      const latestMessage = messages.lastChild;
+      if (latestMessage) {
+        messages.scrollTo({
+          top: latestMessage.offsetTop,
+          behavior: "auto",
+        });
+      }
     }
   }
   handleChange(evt) {
@@ -120,13 +120,13 @@ export class ContactList extends React.Component {
     if (temporaryReceived.length) {
       temporaryReceived.forEach((received) => received.remove());
     }
-
     this.setState({ ...this.state, contact: contact });
     this.state.contact = contact;
 
     this.props.loadInitialData();
     socket.emit("join-room", contact.room);
   }
+
   searchContact(evt) {
     this.setState({
       ...this.state,
@@ -156,9 +156,9 @@ export class ContactList extends React.Component {
       );
       return contact;
     });
-    if (contacts) {
-      console.log(contacts);
-    }
+
+    // contacts = contacts.filter((contact) => contact.messages.length);
+
     if (this.state.search.length) {
       contacts = contacts.filter((contact) =>
         contact.contactName
@@ -171,8 +171,21 @@ export class ContactList extends React.Component {
       <div id="contactListOutermostContainer">
         <div id="contactListComponentContainer">
           {contacts ? (
-            <ul id="contactContainer">
-              <h3 id="contactListHeader">List of contacts</h3>{" "}
+            <ul
+              style={{ overflow: "auto", textAlign: "center" }}
+              id="contactContainer"
+            >
+              <h3
+                style={{
+                  fontSize: "25px",
+                  fontStyle: "bold",
+
+                  color: "rgb(51, 138, 224)",
+                }}
+                id="contactListHeader"
+              >
+                List of contacts
+              </h3>{" "}
               <label id="contactListSearchBar" htmlFor="search"></label>
               <input
                 style={{ fontSize: 20, height: "2vh" }}
@@ -184,6 +197,20 @@ export class ContactList extends React.Component {
               {contacts.map((contact, index) => {
                 return (
                   <button
+                    style={{
+                      display: "flex",
+                      flexDirection: "column",
+                      backgroundColor: "white",
+                      borderLeft: "none",
+                      borderRight: "none",
+                      padding: "0 0 0 0",
+                      margin: "0 0 0 0",
+                      fontSize: "20px",
+                      fontStyle: "bold",
+                      height: "10vh",
+                      alignItems: "start",
+                      color: "black",
+                    }}
                     id="contactButton"
                     type="submit"
                     className="joinButton"
@@ -194,6 +221,7 @@ export class ContactList extends React.Component {
                     <small id="mostRecentMessage">
                       {contact.mostRecentMessageSender}
                       {contact.mostRecentMessage}
+                      {contact.loggedIn}
                     </small>
                     {/* {messageToDisplay} */}
                   </button>

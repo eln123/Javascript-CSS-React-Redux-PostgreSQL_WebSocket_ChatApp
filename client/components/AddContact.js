@@ -4,6 +4,7 @@ import { setSocketOntoRedux } from "../store/socket";
 // import { createNewContact } from "../store/contact";
 import history from "../history";
 import { me } from "../store/auth";
+import { Link } from "react-router-dom";
 
 class AddContact extends React.Component {
   constructor() {
@@ -11,21 +12,25 @@ class AddContact extends React.Component {
     this.state = {
       contactName: "",
       phoneNumber: "",
+      addAContact: true,
     };
     this.submitHandler = this.submitHandler.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
   componentDidMount() {
     const socket = this.props.socket;
-    socket.on("contact-added", (message) => console.log(message));
+
+    socket.on("contact-added", (message) => {
+      console.log(message);
+      this.setState({ ...this.state, addAContact: !this.state.addAContact });
+    });
   }
   async submitHandler(event) {
     event.preventDefault();
     const userPhoneNumber = this.props.user.phoneNumber;
     let contactNameInput = document.getElementById("contactNameInput");
-    contactNameInput.value = "";
+
     let phoneNumberInput = document.getElementById("phoneNumberInput");
-    phoneNumberInput.value = "";
 
     const socket = this.props.socket;
     if (this.state.phoneNumber.length > 10) return;
@@ -35,8 +40,9 @@ class AddContact extends React.Component {
       this.state.contactName,
       this.state.phoneNumber
     );
+    this.state.phoneNumber = "";
+    this.state.contactName = "";
     await this.props.loadInitialData();
-    history.push("/conversation");
   }
 
   handleChange(event) {
@@ -44,7 +50,8 @@ class AddContact extends React.Component {
   }
 
   render() {
-    return (
+    let addAContact = this.state.addAContact;
+    return addAContact ? (
       <div
         style={{
           height: "80vh",
@@ -58,6 +65,7 @@ class AddContact extends React.Component {
           backgroundColor: "whiteSmoke",
           display: "flex",
           flexDirection: "column",
+          position: "relative",
         }}
       >
         <h1 style={{ textAlign: "center" }}>Create new contact:</h1>
@@ -118,6 +126,43 @@ class AddContact extends React.Component {
             value="Submit"
           />
         </form>
+        <h4
+          style={{
+            position: "absolute",
+
+            backgroundColor: "red",
+            height: "200px",
+          }}
+          id="addContactSuccess"
+        ></h4>
+      </div>
+    ) : (
+      <div
+        style={{
+          height: "80vh",
+          width: "50vw",
+          borderRadius: "10px",
+          border: "1px solid black",
+          position: "absolute",
+          left: "50%",
+          top: "10%",
+          transform: "translateX(-50%)",
+          backgroundColor: "whiteSmoke",
+          display: "flex",
+          flexDirection: "column",
+          position: "relative",
+        }}
+      >
+        <h1 style={{ textAlign: "center" }}>Successfully Added!</h1>
+        <button
+          onClick={() => {
+            this.state.addAContact = true;
+            console.log(this.state);
+          }}
+        >
+          Add Another?
+        </button>
+        <Link to={"/conversation"}>Go back to Home Page</Link>
       </div>
     );
   }

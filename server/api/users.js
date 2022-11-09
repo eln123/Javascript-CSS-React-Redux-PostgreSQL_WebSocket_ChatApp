@@ -19,7 +19,6 @@ router.get("/", async (req, res, next) => {
 
 router.get("/:id", async (req, res, next) => {
   try {
-    console.log("hi");
     const [user] = await User.findAll({
       where: {
         id: req.params.id,
@@ -44,6 +43,14 @@ router.get("/:id/:room", async (req, res, next) => {
     res.json(user);
   } catch (err) {
     next(err);
+  }
+});
+
+router.put(`/logout/:id`, async (req, res, next) => {
+  try {
+    console.log(req.params);
+  } catch (err) {
+    res.send(err);
   }
 });
 

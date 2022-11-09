@@ -46,10 +46,8 @@ serverSocket.on("connection", (socket) => {
       },
     });
     if (!contact) {
-      console.log("yo");
       const errorMessage = "user doesn't exist";
-      socket.to(room).emit("userNoExist", errorMessage);
-      console.log("sentBackToRoom", errorMessage);
+      socket.to(room).emit("userDoesNotExist", errorMessage);
       return;
     }
 
@@ -71,18 +69,6 @@ serverSocket.on("connection", (socket) => {
     await user.addMessage(messageCreated);
     await contact.addMessage(messageCreated);
 
-    // const [sendBack] = await User.findAll({
-    //   where: {
-    //     phoneNumber: sender,
-    //   },
-    //   include: [
-    //     {
-    //       model: Message,
-    //     },
-    //     { model: Contact },
-    //   ],
-    // });
-
     socket.to(room).emit("receive-message", messageCreated, user, contact);
   });
 
@@ -100,8 +86,8 @@ serverSocket.on("connection", (socket) => {
         phoneNumber: contactPhoneNumber,
       });
       await user.addContact(contactCreated);
-      const message = "contact was added - from back end";
-      socket.emit("contact-added", message);
+      const messageForConsole = "contact was added - from back end";
+      socket.emit("contact-added", messageForConsole);
     }
   );
 
