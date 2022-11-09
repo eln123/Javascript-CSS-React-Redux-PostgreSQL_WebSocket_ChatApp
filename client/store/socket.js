@@ -26,7 +26,6 @@ export const setSocketOntoRedux = (socket) => {
 
 export const setSocket = (socket) => {
   return async function (dispatch) {
-    console.log("dispatching socket", socket);
     dispatch(setSocketOntoRedux(socket));
   };
 };
@@ -37,7 +36,6 @@ export const setSocket = (socket) => {
 export default function (state = {}, action) {
   switch (action.type) {
     case SET_SOCKET:
-      console.log("socket dispatched", action.socket);
       return action.socket;
     default:
       return state;

@@ -24,6 +24,10 @@ const User = db.define("user", {
       isNumeric: true,
     },
   },
+  loggedIn: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
+  },
 });
 
 module.exports = User;
@@ -72,6 +76,11 @@ User.findByToken = async function (token) {
     if (!user) {
       throw "nooo";
     }
+
+    await user.update({
+      loggedIn: true,
+    });
+
     return user;
   } catch (ex) {
     const error = Error("bad token");

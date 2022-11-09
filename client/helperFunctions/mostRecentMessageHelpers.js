@@ -23,7 +23,6 @@ export const getMessagesForContact = (contact, messages) => {
       contactMessages.push(message);
     }
   }
-  console.log("contactMessages", contactMessages);
   return contactMessages;
 };
 
@@ -31,7 +30,7 @@ export const getMostRecentMessage = (contact) => {
   let messages = contact.messages.map((message) => message.content);
   if (!messages) return "";
   let mostRecentMessage = messages[messages.length - 1];
-  console.log("mostRecentMessage", mostRecentMessage);
+
   return mostRecentMessage;
 };
 

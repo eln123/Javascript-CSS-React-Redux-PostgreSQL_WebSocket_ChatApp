@@ -24,6 +24,7 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
+
     return dispatch(setAuth(res.data));
   }
 };
@@ -67,7 +68,7 @@ const setUpdatedUser = (updatedUser) => ({ type: SET_UPDATED, updatedUser });
 export const getMessages = (userId, room) => async (dispatch) => {
   try {
     const res = await axios.get(`/api/users/${userId}/${room}`);
-    console.log(res);
+
     const updatedUser = res.data;
     dispatch(setUpdatedUser(updatedUser));
   } catch (err) {

@@ -18,7 +18,6 @@ export function removeMostRecentClass() {
   ];
 
   if (mostRecentWasASentMessage) {
-    console.log("most recent a sent");
     mostRecentWasASentMessage.classList.remove("sentMessageMostRecent");
   }
   let [mostRecentWasAReceivedMessage] = [
@@ -72,7 +71,7 @@ export const clientSideFunc = (auth) => {
 
   function displayReceivedMessage(message, user, contact) {
     removeMostRecentClass();
-    console.log(message);
+
     const messages = document.getElementById("messageList");
     const newMessage = document.createElement("li");
     const sender = message.sender;
@@ -98,21 +97,15 @@ export const clientSideFunc = (auth) => {
     console.log("Connected to server");
 
     clientSocket.on("receive-message", (message, user, contact) => {
-      console.log("line94");
       displayReceivedMessage(message, user, contact);
     });
+
     clientSocket.on("joined-room", (message) => {});
 
-    clientSocket.on("userNoExist", (message) => {
-      console.log("sljf");
+    clientSocket.on("userDoesNotExist", (message) => {
       console.log(message);
       return;
     });
-
-    // socket.on("contact-added", (message) => console.log(message));
-    // socket.on("user-doesn't-exist", (message) => {
-    //   console.log(message);
-    // });
   });
 
   return clientSocket;
