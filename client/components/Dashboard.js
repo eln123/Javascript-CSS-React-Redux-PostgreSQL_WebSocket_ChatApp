@@ -96,7 +96,7 @@ export class Dashboard extends React.Component {
     if (!this.state.contact.phoneNumber) return;
     const room = this.state.contact.room;
     const contactPhoneNumber = this.state.contact.phoneNumber;
-    let textInput = document.getElementById("textInput");
+    let textInput = document.getElementById("textInputForHandleSubmit");
     textInput.value = "";
     const message = this.state.message;
     this.state.message = ""; // this solves problem of sending a message, but still having that message on state
@@ -321,14 +321,33 @@ export class Dashboard extends React.Component {
                   <label htmlFor="text">{/* <small>text</small> */}</label>
 
                   <input
-                    id="textInput"
+                    style={{
+                      marginLeft: "10vw",
+                      fontSize: "25px",
+                      padding: "5px 5px 5px 5px",
+                      width: "50vw",
+                      maxHeight: "10vh",
+                      wordWrap: "break-word",
+                      backgroundColor: "white",
+                    }}
+                    id="textInputForHandleSubmit"
                     name="text"
                     type="text"
                     placeholder="Type something"
                     onChange={this.handleChange}
                   />
                 </div>
-                <button id="sendButton" type="submit">
+                <button
+                  style={{
+                    height: "75px",
+                    width: "90px",
+                    borderRadius: "10px",
+                    backgroundColor: "rgb(51, 138, 224)",
+                    color: "white",
+                    fontSize: "20px",
+                  }}
+                  type="submit"
+                >
                   Send
                 </button>
               </form>
