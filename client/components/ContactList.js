@@ -224,15 +224,15 @@ export class ContactList extends React.Component {
                       borderLeft: "none",
                       borderRight: "none",
                       borderBottom: "2px lightgrey",
-                      padding: "0 0 0 0",
+                      padding: "0 10% 0 2px",
                       margin: "0 0 0 0",
                       fontSize: "20px",
                       fontStyle: "bold",
                       alignItems: "start",
+                      height: "10vh",
                       color: "black",
                     }}
                     type="submit"
-                    className="joinButton"
                     key={contact.id}
                     onClick={(e) => this.selectContact(contact, e)}
                   >
@@ -240,9 +240,15 @@ export class ContactList extends React.Component {
                     <small
                       style={{
                         wordBreak: "break-word",
-                        padding: "0 5px 0 5px",
+                        padding: "0 10% 0 5px",
+                        alignSelf: "center",
+                        width: "80%",
+                        height: "3em",
+                        wordWrap: "break-word",
+                        padding: "auto auto auto auto",
+                        color: "gray",
+                        overflow: "hidden",
                       }}
-                      id="mostRecentMessage"
                     >
                       {contact.mostRecentMessageSender}
                       {contact.mostRecentMessage}
