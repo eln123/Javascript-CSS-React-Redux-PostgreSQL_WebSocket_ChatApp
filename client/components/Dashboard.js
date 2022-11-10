@@ -24,7 +24,7 @@ export const AddClassToMessage = (message, user) => {
   }
 };
 
-export class ContactList extends React.Component {
+export class Dashboard extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -355,4 +355,4 @@ const mapDispatch = (dispatch) => {
   };
 };
 
-export default connect(mapState, mapDispatch)(ContactList);
+export default connect(mapState, mapDispatch)(Dashboard);

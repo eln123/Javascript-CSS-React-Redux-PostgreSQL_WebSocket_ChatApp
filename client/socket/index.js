@@ -2,7 +2,7 @@ import socket from "socket.io-client";
 const html = require("html-template-tag");
 import history from "../history";
 import { getUserAgain } from "../store/auth";
-import { setIdOfMessage } from "../components/ContactList";
+import { setIdOfMessage } from "../components/Dashboard";
 
 export const setId = (message, user) => {
   if (message.sender === user.phoneNumber) {

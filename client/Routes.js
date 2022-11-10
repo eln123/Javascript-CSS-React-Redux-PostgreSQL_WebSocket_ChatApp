@@ -4,7 +4,7 @@ import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
 import Home from "./components/Home";
 import ClientSideSocket from "./components/Socket";
-import ContactList from "./components/ContactList";
+import Dashboard from "./components/Dashboard";
 import { me } from "./store";
 import history from "./history";
 import { clientSideFunc } from "./socket";
@@ -32,9 +32,9 @@ class Routes extends Component {
       <div>
         {isLoggedIn ? (
           <Switch>
-            <Route path="/conversation" component={ContactList} />
+            <Route path="/dashboard" component={Dashboard} />
             <Route path="/addContact" component={AddContact} />
-            <Redirect to="/conversation" />
+            <Redirect to="/dashboard" />
           </Switch>
         ) : (
           <Switch>
