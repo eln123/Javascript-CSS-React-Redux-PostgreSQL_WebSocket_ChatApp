@@ -223,7 +223,7 @@ export class Dashboard extends React.Component {
                       backgroundColor: "white",
                       borderLeft: "none",
                       borderRight: "none",
-                      borderBottom: "2px lightgrey",
+                      borderBottom: "2px solid black",
                       padding: "0 10% 0 2px",
                       margin: "0 0 0 0",
                       fontSize: "20px",
@@ -284,7 +284,6 @@ export class Dashboard extends React.Component {
                   textAlign: "center",
                   marginBottom: "10px",
                   height: "5vh",
-
                   borderBottom: "1px solid black",
                   overflow: "hidden",
                 }}
