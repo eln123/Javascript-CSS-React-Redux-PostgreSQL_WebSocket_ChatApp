@@ -2,14 +2,12 @@ import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { withRouter, Route, Switch, Redirect } from "react-router-dom";
 import { Login, Signup } from "./components/AuthForm";
-import Home from "./components/Home";
-import ClientSideSocket from "./components/Socket";
+
 import Dashboard from "./components/Dashboard";
 import { me } from "./store";
 import history from "./history";
 import { clientSideFunc } from "./socket";
 import { setSocket } from "./store/socket";
-import Conversation from "./components/Conversation";
 import AddContact from "./components/AddContact";
 
 /**
