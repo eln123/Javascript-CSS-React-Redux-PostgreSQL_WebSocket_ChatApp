@@ -123,14 +123,7 @@ height: 85vh;
   align-self: center
 }
 
-#mostRecentMessage {
-  align-self: center;
-  width: 60ch;
-  word-wrap: break-word;
-  padding: 0 0 0 10px;
-  color: gray;
-  overflow: hidden;
-}
+
 
 .sentMessageMostRecent {
   box-sizing: content-box;
