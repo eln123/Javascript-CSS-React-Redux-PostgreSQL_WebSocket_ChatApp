@@ -52,12 +52,7 @@ nav a {
   color: white;
 }
 
-#navBarFlex {
-  display: flex;
-  justify-content: end;
-  padding-right: 50px;
-  font-size: 1.5vh
-}
+
 
 #homeContainer a {
   display: inline-block;
@@ -86,10 +81,7 @@ form div {
   margin: 0 0 0 -7px;
   height: 100vh;
   flex-basis: 10%;
-  /* display: grid;
-  grid-template-areas: 
-    "contactList messageAndTextFormDiv";
-  grid-template-columns: 1fr 3fr; */
+ 
   display: flex;
 }
 
@@ -226,20 +218,7 @@ height: 85vh;
 
   
   
-  #textInput {
-    margin-left: 10vw;
-    font-size: 25px;
-    padding: 5px 5px 5px 5px;
-    width: 50vw;
-    word-wrap: break-word;
-    background-color: white;
-  }
+ 
   
-  #sendButton {
-    height: 75px;
-    width: 75px;
-    border-radius: 10px;
-    background-color:  rgb(51, 138, 224);
-    color: white
-  }
+
   
