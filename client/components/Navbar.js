@@ -10,10 +10,10 @@ const Navbar = ({ handleClick, isLoggedIn, id }) => {
         {isLoggedIn ? (
           <div id="navBarFlex">
             <Link id="navLink" to="/addContact">
-              Add Contact page
+              Add Contact
             </Link>
-            <Link id="navLink" to="/conversation">
-              Conversation
+            <Link id="navLink" to="/dashboard">
+              Dashboard
             </Link>
             <a id="logoutLink" href="#" onClick={handleClick}>
               Logout
