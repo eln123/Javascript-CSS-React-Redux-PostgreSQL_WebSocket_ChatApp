@@ -57,17 +57,17 @@ async function seed() {
   const contacts = await Promise.all([
     Contact.create({
       contactHolder: 987654321,
-      contactName: "helen",
+      contactName: "Helen",
       phoneNumber: 123456789,
     }),
     Contact.create({
       contactHolder: 123456789,
-      contactName: "ethan",
+      contactName: "Ethan",
       phoneNumber: 987654321,
     }),
     Contact.create({
       contactHolder: 123456789,
-      contactName: "tupac",
+      contactName: "Tupac",
       phoneNumber: 987123456,
     }),
   ]);
